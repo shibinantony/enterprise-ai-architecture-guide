@@ -1,5 +1,13 @@
 # Change log
 
+## 0.3.1 — 2026-10-09
+
+- Made Google Cloud the primary entry point in the title, opening navigation, architecture journey, and repository description.
+- Added direct navigation through the Google Cloud chapter and onward to business preparation, delivery, operations, people, and governance.
+- Retained equivalent-layer Azure/AWS comparisons and the shared pricing model as prominent alternative-platform evaluation paths.
+
+This is an editorial and navigation update; the product and pricing evidence retains its existing review date and stated limits.
+
 ## 0.3 — 2026-10-09
 
 - Added a complete fictional three-tool service-recovery walkthrough, preserving the link between prompting, current business facts, reusable procedures, and observable action.

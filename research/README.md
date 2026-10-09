@@ -2,7 +2,7 @@
 
 ## Scope
 
-This guide connects business value, process redesign, enterprise architecture, hyperscaler capabilities, pricing, delivery, operations, and organizational change. Google Cloud is the detailed implementation path; Azure and AWS are compared at equivalent logical layers.
+This guide connects business value, process redesign, enterprise architecture, hyperscaler capabilities, pricing, delivery, operations, and organizational change. [Google Cloud](../docs/gcp-enterprise-architecture.md) is the main entry point and detailed implementation path; [Azure and AWS](../docs/cross-cloud-comparison.md) are compared at equivalent logical layers using the shared [pricing and economics analysis](../docs/pricing-and-economics.md).
 
 The primary-source review date is **2026-10-09 UTC**. This is a focused technical and commercial-documentation review, not a systematic literature review, production case study, or cloud benchmark.
 
