@@ -2,7 +2,7 @@
 
 **Reviewed:** 2026-10-09 UTC. The review clock returned 2026-10-09 11:20:57 UTC. Only public primary sources informed the two documents below.
 
-**Outputs:** [Security and assurance](../docs/security-and-assurance.md) and [Operating model](../docs/operating-model.md).
+**Outputs:** [Security and assurance](../docs/security-and-assurance.md), [Operating model](../docs/operating-model.md), and the supporting [Governance and business realignment](../docs/governance-and-business-realignment.md) chapter. Edition 0.2 places these within a broader value-led architecture and adoption guide.
 
 ## Source register
 

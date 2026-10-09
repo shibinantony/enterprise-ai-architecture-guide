@@ -1,127 +1,145 @@
-# Reference architecture: authority from intent to committed outcome
+# End-to-end enterprise architecture for LLM and agent services
 
-This is a **proposed provider-neutral design**, not a prescribed MCP deployment topology. The protocol boundary and the business authority boundary are related but distinct. The [MCP foundations](mcp-foundations.md) chapter describes the versioned protocol requirements.
+The architecture starts with a business process and ends with a supported service and verified outcome. The model, retrieval system, agent runtime, and tool protocol are components within it. This is a proposed logical design; the [Google Cloud chapter](gcp-enterprise-architecture.md) and [cloud comparison](cross-cloud-comparison.md) map it to actual platforms.
 
-## Logical view
+## Architecture layers
+
+| Layer | Responsibility | Decisions |
+|---|---|---|
+| Business and process | Define the outcome and redesigned work | Eligible cases, owner, handoffs, benefit measures |
+| Experience | Put the service in the user's workflow | Portal, mobile, collaboration, API, contact center, correction, accessibility |
+| Application | Coordinate the process and durable state | Deterministic steps, adaptive reasoning, long-running work, review |
+| AI | Interpret, synthesize, propose | Model selection, routing, prompts, skills, multimodality, tools |
+| Data and knowledge | Supply relevant and authoritative context | Documents, live records, retrieval, structured queries, freshness, memory |
+| Integration | Read and change business systems | APIs, MCP, events, object access, transaction invariants |
+| Infrastructure | Run the workload | Runtime, identity, network, regions, quotas, capacity, resilience |
+| Operations and economics | Sustain outcomes | Evaluation, telemetry, incidents, adoption, cost, improvement |
+
+Security and governance run through these layers. They influence architecture choices while business and application design remain central.
+
+## Production reference view
 
 ```mermaid
 flowchart TB
-    U[User or initiating service] --> X[Experience and authenticated request]
-    X --> H[Agent host: reasoning and workflow]
-    H --> C[MCP client]
-    C --> G[Optional gateway: routing and edge checks]
-    G --> T[MCP server and bounded tool adapter]
-    T --> B[Domain service: object authorization and transaction rules]
-    B --> S[(System of record)]
-    H --> K[Authorized retrieval and bounded memory]
-    P[Policy decision service] -.-> T
-    P -.-> B
-    A[Independent approval service] -.-> T
-    I[Identity and delegated authority] -.-> X
-    I -.-> T
-    R[Registry and release configuration] -.-> H
-    R -.-> T
-    X -.-> E[Minimized evidence and operational telemetry]
-    H -.-> E
-    T -.-> E
-    B -.-> E
+    U[Customer or employee] --> X[Experience: portal, mobile, collaboration, API, contact center]
+    X --> W[Business application and durable workflow state]
+    W --> O[Reasoning and orchestration: agent, routing, skills, context]
+    O --> M[Model inference]
+    O --> K[Knowledge: authorized retrieval and bounded memory]
+    K --> D[Documents, indexes, and data products]
+    O --> P[Execution checks: identity, policy, limits, required review]
+    P --> G[Optional MCP gateway or direct supported tool connection]
+    G --> R[Read tools: search, status, queries]
+    G --> A[Action tools: bounded updates and commitments]
+    R --> S[Enterprise systems: ERP, CRM, PLM, ITSM, data, payments]
+    A --> B[Domain services and transaction invariants]
+    B --> S
+    W --> H[Specialist queue and workbench]
+    H --> W
+    C[Control plane: owners, registry, identity, versions, release configuration] -.-> O
+    C -.-> G
+    E[Observability, evaluations, FinOps, security, evidence, SDLC] -.-> W
+    E -.-> O
+    E -.-> B
 ```
 
-Solid arrows show the principal request and data paths. Dotted arrows show supporting control and evidence relationships. Components are logical responsibilities; multiple responsibilities may share a deployment if isolation and accountability remain clear.
+The control plane manages configuration and lifecycle; it is not necessarily a sequential network hop. The gateway is optional and cannot replace domain authorization. Read-only tools still require confidentiality and object-access controls.
 
-A gateway is optional. It can centralize common routing, identity checks, rate limits, and metadata controls. It cannot replace record-level authorization and transaction rules in the domain service. Direct-to-server paths must be denied or meet equivalent enforcement requirements. See [ADR-001](../decisions/001-enforce-authority-at-execution.md).
+Separate durable process state from conversation history. The application must know whether a case is waiting for information, awaiting review, committed, failed, or unresolved even if model context is lost.
 
-## Trust boundaries and ownership
+## Four collaborating planes
 
-| Boundary | Treat as untrusted | Enforce before crossing | Responsible owner |
-|---|---|---|---|
-| Request to agent host | User text, attachments, claimed identity in a message | Authenticate through a trusted channel; establish purpose and permitted scope | Experience and identity owners |
-| Retrieved content to reasoning | Documents, resource contents, tool results, embedded instructions | Access filters, data minimization, source attribution, context separation | Data and application owners |
-| Proposal to tool service | Model-selected operation and arguments | Validate schema, principal, delegation, target object, current policy, and approval | Tool and control owners |
-| Tool service to business transaction | Caller-supplied state and eligibility assumptions | Fresh state, domain invariants, cumulative limits, concurrency, idempotency | Domain service owner |
-| Execution to evidence store | Raw content and asserted success | Correlate verified outcome; redact, protect, and retain only justified evidence | Operations and evidence owners |
+| Plane | Contents | Business purpose |
+|---|---|---|
+| Reasoning | Model, agent loop, routing, procedures, orchestration | Interpret intent and choose useful next steps |
+| Knowledge | Documents, records, retrieval, context, bounded memory | Supply relevant evidence and facts |
+| Action | Tools, APIs, workflows, transaction services | Produce a real business result |
+| Control | Identity, policy, registry, release, evaluation, evidence | Make operation accountable and maintainable |
 
-Network location alone should not establish trust. This recommendation aligns with NIST's zero trust guidance, which centers access decisions on resources and explicit authentication and authorization rather than implicit trust in a network location. [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final)
+MCP standardizes part of the connection between the host and knowledge/action capabilities. It does not supply the entire data platform, business process, or operating model. [MCP foundations](mcp-foundations.md) explains the version-specific boundary.
 
-## A material action, end to end
+## Data architecture
+
+The preparation path inventories sources, assigns ownership, preserves permissions, parses content, removes duplication, creates indexes or embeddings where useful, and evaluates retrieval. Updates and deletions need a freshness commitment.
+
+The online path establishes the task and authenticated scope, retrieves relevant permitted evidence, reads live operational facts when required, and builds a minimal context. Distinguish source-backed facts, interpretation, and uncertainty in the output.
+
+Use search for documents, governed queries for structured analysis, and domain APIs for transactional facts. Keep authoritative state in the system of record. Memory needs purpose, access, correction, retention, and ownership; it is not an unlimited store of user interactions.
+
+## Application and reasoning architecture
+
+Use deterministic workflow for known steps and rules. Introduce adaptive reasoning where intent or evidence changes the next useful step. Define completion criteria, call and time budgets, clarification, cancellation, and escalation.
+
+Introduce multiple agents only for independently meaningful work packages. Define shared state, message contracts, timeout, duplicates, and one owner of the final outcome. Extra agents can increase repeated context and coordination cost.
+
+Long-running work needs durable jobs and explicit status. An HTTP request or runtime session should not be the sole record of a business commitment. Verify workflow durability separately from agent hosting and session features.
+
+## Integration and transaction architecture
+
+Tools need typed inputs, clear results, versioning, safe errors, and accountable support. Prefer existing domain APIs where they meet the need. Add MCP when common discovery, invocation, and host reuse create value.
+
+A service-recovery operation progresses through **proposal, authorization, commit, and communication**. It must not report completion based only on a plausible proposal. Domain services validate current state, object ownership, aggregate limits, and required approvals at execution.
 
 ```mermaid
 sequenceDiagram
     actor User
-    participant Host as Agent host
-    participant Tool as Tool service
-    participant Policy as Policy decision
-    participant Approval as Approval service
-    participant Domain as Domain service
-    participant Record as System of record
-    User->>Host: Request under authenticated scope
-    Host->>Tool: Propose action with expected state and idempotency key
-    Tool->>Policy: Evaluate verified identity, scope, arguments, policy
-    alt Denied
-        Policy-->>Tool: Deny with bounded reason
-        Tool-->>Host: No action performed
-    else Approval required
-        Policy-->>Tool: Approval requirement
-        Tool->>Approval: Request approval bound to exact transaction
-        Approval-->>Tool: Verified approval reference or rejection
-        Note over Tool,Domain: Continue only with valid approval; recheck authority and state
-    else Allowed within delegated limits
-        Policy-->>Tool: Permit with obligations
+    participant App as Business application
+    participant Agent as Reasoning and workflow
+    participant Data as Knowledge and live data
+    participant Human as Specialist queue
+    participant Domain as Transaction service
+    User->>App: Request assistance
+    App->>Agent: Case and authenticated scope
+    Agent->>Data: Retrieve policy and current facts
+    Data-->>Agent: Permitted evidence and state
+    Agent->>Agent: Interpret and prepare options
+    alt Ambiguity or required review
+        Agent->>Human: Complete case and specific decision
+        Human-->>Agent: Decision or escalation
     end
-    opt Authorized action with all obligations satisfied
-        Tool->>Domain: Validated request and authority evidence
-        Domain->>Record: Atomically enforce invariants and commit or replay
-        Record-->>Domain: Durable outcome or unresolved status
-        Domain-->>Tool: Transaction reference and verified status
-        Tool-->>Host: Minimized result
-        Host-->>User: Explain confirmed outcome or pending reconciliation
+    opt Authorized action and valid preconditions
+        Agent->>Domain: Validated operation with stable identity
+        Domain-->>Agent: Committed result or unresolved status
     end
+    Agent-->>App: Confirmed outcome or next responsible step
+    App-->>User: Explanation and case status
 ```
 
-The approval branch is conditional; it must not be interpreted as permission to continue after rejection, expiry, cancellation, or changed arguments. The final execution block requires a fresh valid authorization decision in every path.
+Rejection, expired approval, or unresolved authority must prevent execution. Approval is bound to the actual action and does not transfer to changed arguments. [ADR-001](../decisions/001-enforce-authority-at-execution.md) details the enforcement decision.
 
-The approval artifact binds the principal, delegated scope, tenant, object, operation, canonical arguments, policy version, expiry, and relevant state context. A changed amount or destination invalidates the prior decision. Approval consumption and transaction execution require a defined recovery design across their respective systems; independent writes do not become atomic because they share a trace identifier.
+## Platform and deployment design
 
-## Contracts worth standardizing
-
-| Contract | Minimum content | Why it matters |
-|---|---|---|
-| Capability registration | Owner, purpose, schema version, data scope, risk, support, review date | Establishes accountability and consumption conditions |
-| Invocation | Operation, typed arguments, correlation, idempotency, expected state | Enables validation and safe retry design |
-| Authorization context | Authenticated subject, workload, delegation, resource scope, policy decision | Prevents model text from supplying its own authority |
-| Result | Status, safe reason code, transaction reference, state version, retry guidance | Distinguishes completion, rejection, and uncertainty |
-| Release record | Model/host/tool/workflow/policy/evaluation identifiers, approvals, rollback plan | Makes change review and incident reconstruction possible |
-
-These are enterprise contract recommendations, not mandatory MCP fields. Domain correlation and idempotency semantics must be implemented explicitly; JSON-RPC IDs do not supply business transaction guarantees.
-
-## Failure behavior is part of the architecture
-
-| Failure | Required design decision |
+| Concern | Required design work |
 |---|---|
-| Policy or approval service unavailable | Default to no new material action; use a documented exception procedure outside the agent |
-| Timeout after possible commit | Query durable transaction state using the same operation identity; do not blindly retry with a new key |
-| Duplicate or concurrent proposal | Enforce atomic idempotency and aggregate limits at the transaction boundary |
-| Stale authoritative snapshot | Reject or re-read and re-evaluate; obtain renewed approval if its binding no longer holds |
-| Tool or metadata version changed | Halt incompatible use until compatibility, risk, and evaluation review completes |
-| Evidence service degraded | Declare whether action is blocked or safely buffered; demonstrate integrity and recovery for the chosen risk tier |
-| Compromised tool or credential | Revoke access, stop new actions, isolate the service, and reconcile in-flight transactions |
+| Environments | Separate development, evaluation, production; controlled promotion |
+| Identity and tenancy | Workload/user identity, delegation, least privilege, object isolation |
+| Networking and data | Approved destinations, locality, private connectivity where required, egress, retention |
+| Capacity | Model quotas, concurrent sessions, tool limits, queue depth, downstream load |
+| Availability | Dependency map, timeout budgets, supported regions, degraded mode |
+| Delivery | Versioned artifacts/configuration, repeatable deployment, supported rollout, rollback |
+| Observability | Correlation across user, model, retrieval, tools, queues, transaction |
+| Economics | Attribution by process, environment, team, and workload |
 
-Read-only requests may have different availability policies, but confidentiality and object authorization still apply. A fallback must never silently expand access or action limits.
+Managed platforms reduce selected infrastructure responsibilities. The enterprise still owns process fit, data quality, application semantics, outcome acceptance, and operational response. Explicit resource-oriented access is consistent with [NIST zero trust architecture](https://csrc.nist.gov/pubs/sp/800/207/final).
 
-## Data and memory boundaries
+## Failure behavior and evaluation
 
-Perform record filtering before content reaches the model. Limit tool results to fields needed for the task. Retain authoritative facts in systems of record; mark cached context with origin and freshness. Treat durable agent memory as a governed data store with ownership, access control, deletion, and retention rules.
+| Failure | Designed response |
+|---|---|
+| Missing or contradictory evidence | Clarify or escalate with known facts |
+| Model or retrieval outage | Honest degraded path or staffed fallback |
+| Read failure | Preserve the case and communicate the next step |
+| Timeout after possible commit | Reconcile durable status before retrying |
+| Duplicate/concurrent action | Enforce idempotency and aggregate constraints atomically |
+| Overloaded human queue | Expose aging; limit new proposals or change routing |
+| Regressed dependency version | Pause expansion, roll back, re-evaluate |
 
-Propagate minimal identity and audit context. Avoid collecting entire prompts, chain-of-thought, or raw personal records as a default observability strategy. Prefer explicit decision inputs, policy outcomes, safe summaries, and transaction references. Separate operational telemetry from access-restricted evidence.
+Evaluate interpretation, retrieval, faithful responses, tools, transactions, handoffs, latency, cost, and final business outcomes. Use representative and failure cases. Record application, model/configuration, procedure, tool, data/index, policy, evaluation, and deployment versions.
 
-## Deployment choices
+Collect relevant evidence with minimization. Raw hidden reasoning is not required to record explicit decisions, sources, outcomes, and limitations.
 
-A local MCP process is appropriate for isolated development when its environment, filesystem, and credentials are constrained. Production often benefits from a centrally operated service, but remote execution is not intrinsically safer. Evaluate both against identity, tenancy, isolation, network egress, upgrade control, availability, and recovery requirements.
+## Architecture deliverables
 
-Use the [platform framework](platform-decision-framework.md) to test alternatives. Pin the deployed protocol revision, SDKs, transports, and extensions. An example that works against an older session-based MCP implementation is not automatically compatible with this guide's 2026-07-28 baseline.
+Produce a process-to-capability map, logical and deployment views, data flows, integration contracts, capacity and cost model, test strategy, operating responsibilities, failure playbooks, and decision records. Separate proposed design, implementation, and demonstrated evidence.
 
-## Evidence required before production
-
-Produce an invocation-to-transaction trace, object-authorization denial tests, prompt-injection cases, expired and substituted approval tests, concurrent-limit tests, duplicate-retry tests, timeout reconciliation, tool revocation, and rollback or compensation exercises. Also test whether human operators can understand and resolve exceptions within their service commitments.
-
-The [security chapter](security-and-assurance.md) defines the threat-oriented evidence; the [release template](../templates/release-review.md) turns it into a reviewable decision record.
+Continue to the [GCP implementation](gcp-enterprise-architecture.md), [cloud comparison](cross-cloud-comparison.md), and [platform decision framework](platform-decision-framework.md).

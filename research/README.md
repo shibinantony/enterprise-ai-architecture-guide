@@ -1,54 +1,52 @@
 # Research method and evidence map
 
-## Purpose and method
+## Scope
 
-This guide develops a provider-neutral architecture and operating model for MCP-enabled enterprise agents. The source review used publicly available primary standards and guidance, reviewed on **2026-10-09 UTC**. It is a focused technical review, not a systematic literature review or empirical comparison of commercial platforms.
+This guide connects business value, process redesign, enterprise architecture, hyperscaler capabilities, pricing, delivery, operations, and organizational change. Google Cloud is the detailed implementation path; Azure and AWS are compared at equivalent logical layers.
 
-The protocol baseline is **MCP 2026-07-28**, which the official latest-specification link resolved to at review time. Versioned links are preferred. Mutable guidance and extensions are recorded with a review date; their contents may subsequently change.
+The primary-source review date is **2026-10-09 UTC**. This is a focused technical and commercial-documentation review, not a systematic literature review, production case study, or cloud benchmark.
 
-Sources were selected for direct relevance to protocol semantics, identity, security, and organizational risk. Product marketing, confidential materials, and unverified quantitative claims were excluded. No provider ranking or endorsement is implied by a protocol or standards citation.
+## Evidence registers
+
+| Register | What it supports |
+|---|---|
+| [Google Cloud](gcp-source-notes.md) | Current service names, architecture components, development/deployment paths, limitations |
+| [Cross-cloud comparison](cross-cloud-source-notes.md) | Equivalent layers, runtime differences, data, integration, identity, operations, distribution |
+| [Pricing](pricing-source-notes.md) | Exact public rates, deployment modes, units, dates, lifecycle and billing caveats |
+| [MCP](mcp-source-notes.md) | Protocol facts pinned to the 2026-07-28 revision |
+| [Assurance](assurance-source-notes.md) | Supporting risk, identity, security, and organizational guidance |
+
+The [NIST zero trust architecture](https://csrc.nist.gov/pubs/sp/800/207/final) supports the resource-oriented access discussion in the reference architecture. The business process, team design, adoption sequence, scorecards, and economic scenarios are this guide's proposed analytical framework.
 
 ## Evidence classes
 
-| Class | Meaning in this repository |
+| Class | Meaning |
 |---|---|
-| Protocol fact | A claim tied to a specified version of the official MCP documentation |
-| External guidance | Advice from a named primary standards or security organization; applicability requires judgment |
-| Proposed design | The guide's architecture, control pattern, tier, metric, template, or decision framework |
-| Synthetic demonstration | Locally executable examples using fictional data; no production integration |
-| Unvalidated hypothesis | Expected value or reuse benefits that require enterprise measurement |
+| Documented capability | Official service or protocol documentation; deployed support still depends on version, region, and configuration |
+| Sourced price | Public list rate for a named SKU, unit, location/deployment scope, and review date |
+| Proposed architecture | A design recommendation, with alternatives and implementation responsibilities |
+| Illustrative assumption | Invented workload, volume, staffing, price allocation, or benefit input used to explain a calculation |
+| Synthetic demonstration | Local code and fictional records; no deployed platform or real transaction |
+| Observed result | A local check actually executed, with stated scope; not evidence of production behavior |
 
-Recommendations are written as design choices rather than attributed mandates. Risk tiers, scores, thresholds, and time boxes are illustrative. This repository claims no legal compliance, accreditation, production safety certification, or measured business return.
+No provider is ranked universally. Matching a model name or nominal resource size does not eliminate differences in serving, billing, data processing, support, or task behavior.
 
-## Claim-to-source map
+## Comparison method
 
-| Topic | Evidence | Scope and limitation |
-|---|---|---|
-| Host/client/server, tools, resources, prompts | [MCP source register](mcp-source-notes.md) | Protocol and intended interaction patterns; not business authority |
-| HTTP authorization and token boundaries | [MCP source register](mcp-source-notes.md) | Transport-scoped requirements; not a complete enterprise policy model |
-| Revision and compatibility changes | [MCP source register](mcp-source-notes.md) | 2026-07-28 baseline; actual host/SDK support needs testing |
-| Prompt injection, confused deputy, excessive agency | [Assurance source register](assurance-source-notes.md) | Threat guidance; adopting a checklist does not prove protection |
-| Organizational AI risk management | [Assurance source register](assurance-source-notes.md) | Voluntary risk framework; not certification or sector-specific legal advice |
-| Explicit trust boundaries | [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final) | Zero trust architecture guidance; agent-specific mapping is proposed here |
-| Return on investment, platform choice, adoption sequence | [Executive brief](../docs/executive-brief.md), [decision framework](../docs/platform-decision-framework.md), [roadmap](../docs/adoption-roadmap.md) | Original analytical frameworks; no measured results claimed |
-| Policy decision behavior | [Synthetic example](../examples/service-recovery/README.md) | Local fixture and unit tests; no identity or transaction integration |
+Use one business workload and common acceptance criteria. Separate a controlled same-model trial from a native-optimized design comparison. Separate model inference, agent hosting, retrieval/data, integration, distribution, and operations so products at different layers are not treated as direct substitutes.
 
-## Limitations and open questions
+Prices are compared with explicit usage assumptions. Token estimates include the whole modeled task rather than one nominal message. Missing or unpriced items must remain visible rather than silently count as free. A total-cost scenario includes synthetic inputs and is not a provider quote.
 
-The review does not benchmark tool-selection accuracy, cost, scale, or human review behavior. It does not establish current support for the selected protocol revision in any commercial service or SDK. It does not determine jurisdiction-specific obligations or acceptable residual risk for a particular organization.
+## Research limits
 
-Important research questions remain:
+No hyperscaler workload was deployed, performance tested, or billed for this guide. Public pricing does not establish negotiated rates, enterprise discounts, taxes, support fees, exact invoice behavior, or future availability. Model retirement, region, quota, and preview/GA status require revalidation before procurement or deployment.
 
-- How much integration reuse survives differences in identity, policy, and operating requirements?
-- Which approval interfaces help reviewers detect incorrect or manipulated proposals?
-- How should evaluations estimate rare but consequential failures under realistic workloads?
-- Which evidence is sufficient for investigation without excessive collection of sensitive data?
-- How do operating costs and exception rates change as autonomy and tool breadth increase?
+Official pages can disagree or describe different modes. The registers record material ambiguities instead of silently resolving them in favor of a platform. Mutable pages and APIs may change after review; preserve approved evidence in an enterprise decision record.
 
-Answer these with controlled experiments and operational evidence before making broader claims.
+No confidential proposal, private customer evidence, internal architecture, personal records, or employer/client lineage is used. Business scenarios are fictional. No achieved ROI or universal legal compliance is claimed.
 
 ## Maintenance
 
-Review versioned protocol claims before every guide release. Recheck mutable security guidance and extensions. Record substantive changes in [CHANGELOG.md](../CHANGELOG.md). Update claims and examples together when a compatibility assumption changes. Do not silently rewrite a version-specific statement to use a mutable latest link.
+Refresh product and price evidence before a purchasing decision and when the target configuration changes. Recheck model lifecycle dates, serving location, runtime mode, units, minima, and version compatibility. Update the rate file, calculator expectations, chapter, and source register together.
 
-Contributions should add an exact primary URL, source version or publication date where available, review date, supported claim, and limitation. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+Maintain source-backed claims separately from recommendations and forecasts. Record changes in [CHANGELOG.md](../CHANGELOG.md). See [CONTRIBUTING.md](../CONTRIBUTING.md).

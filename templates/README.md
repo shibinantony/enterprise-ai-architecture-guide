@@ -1,12 +1,14 @@
-# Reusable decision templates
+# Reusable enterprise AI delivery artifacts
 
-These blank templates translate the guide into reviewable artifacts. They are proposed working documents, not compliance attestations. Adapt them to the organization's actual authority, obligations, and risk appetite.
+Use these artifacts to connect business redesign, architecture, delivery, operations, and governance. They are working templates, not certification forms.
 
-| Template | Use it to |
+| Template | Use |
 |---|---|
-| [Use-case intake](use-case-intake.md) | Define the business problem and decide whether an agent is justified |
-| [Capability registration](capability-registration.md) | Establish tool ownership, scope, authority, and lifecycle |
-| [Release review](release-review.md) | Record evidence, residual risk, and production scope |
-| [Platform evaluation](platform-evaluation.md) | Compare candidates using mandatory gates and common tests |
+| [Process redesign canvas](process-redesign-canvas.md) | Describe the current and future work, people changes, dependencies, and benefit hypothesis |
+| [Use-case intake](use-case-intake.md) | Select a process and the appropriate AI pattern |
+| [Platform evaluation](platform-evaluation.md) | Compare equivalent services using common evidence and economics |
+| [Capability registration](capability-registration.md) | Establish a supported integration contract and accountable ownership |
+| [Release review](release-review.md) | Assess business, user, technical, and operational readiness |
+| [Value scorecard](value-scorecard.md) | Manage adoption, verified outcomes, cost, capacity, and improvement |
 
-Keep completed enterprise records in an appropriately controlled workspace. Public contributions should use fictional scenarios and omit credentials, customer data, internal topology, incident details, and private evidence links.
+Keep completed enterprise records in a controlled workspace. Public examples must be fictional and exclude private topology, credentials, customer data, confidential terms, and private evidence links.

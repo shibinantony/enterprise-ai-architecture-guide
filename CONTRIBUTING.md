@@ -1,12 +1,14 @@
 # Contributing
 
-Contributions should improve the accuracy, usefulness, or clarity of this provider-neutral guide.
+Contributions should improve the accuracy, usefulness, or clarity of this enterprise AI architecture and adoption guide.
 
 ## Content expectations
 
 - Use public primary sources for protocol, security, and standards claims. Give exact links and versions or review dates.
 - Distinguish source-backed facts, proposed architecture, synthetic demonstrations, and measured results.
-- Explain a concrete process problem, control boundary, or decision. Avoid unsupported rankings and product promotion.
+- Explain a concrete process problem, capability, architectural trade-off, or operating decision. Compare cloud products at equivalent layers and avoid unsupported rankings or promotion.
+- For pricing, record the date, currency, region, model/SKU, deployment mode, billing unit, exact official source, and exclusions. Separate sourced rates from synthetic workload and staffing assumptions.
+- Connect technology to process redesign, user adoption, measurable outcomes, and full service economics.
 - Keep examples fictional. Do not submit employer or client materials, personal data, credentials, internal architecture, or private evidence links.
 - Discuss limitations, failure behavior, ownership, and recovery alongside the normal flow.
 - Report actual test results and evidence gaps. Do not describe a simulator as a production service.
@@ -21,6 +23,8 @@ Run from the repository root with Python 3.9 or later:
 python tools/verify_repository.py
 python examples/service-recovery/evaluator.py
 python -m unittest discover -s examples/service-recovery -p "test_*.py" -v
+python examples/cost-model/calculator.py
+python -m unittest discover -s examples/cost-model -p "test_*.py" -v
 ```
 
 The repository checker validates local links, JSON syntax, and common publication hazards. It is a heuristic check and cannot establish that content is safe to publish. Review the complete proposed diff and any commit metadata before publication.

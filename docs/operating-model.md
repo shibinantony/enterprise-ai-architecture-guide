@@ -1,98 +1,92 @@
-# Operating model: govern a service, measure an outcome
+# Operating model: organize people and capabilities around value
 
-An enterprise agent should enter the portfolio as an accountable service with a defined purpose, permitted authority, operating budget and exit path. A reusable tool catalog is valuable only when its services remain supported, observable and fit for the workflows that consume them.
+Enterprise AI succeeds when a redesigned process produces better outcomes and somebody owns the complete service. The product team cannot stop at a convincing demonstration, the platform team cannot stop at an available endpoint, and the business owner cannot stop at approving a budget. Delivery and operations must share a definition of completed work.
 
-**Status:** proposed operating model, informed by the public sources linked below and reviewed on **2026-10-09 UTC**. Roles, tiers, gates and measures are design recommendations. They are not regulatory classifications, external certification criteria or proof of compliance.
+This is a proposed operating model, reviewed on **2026-10-09 UTC**. It connects [Day 0 process redesign](day-0-business-process.md), [Day 1 implementation](day-1-build-and-launch.md) and [Day 2 improvement](day-2-operate-and-improve.md). Adapt the team structure to the organization; retain clear decision rights and evidence of value.
 
-## Start with a decision worth improving
+## Build a team that owns the process
 
-Before selecting a platform, document the process problem, affected people, existing performance, cost of an incorrect action and available recovery. Compare an agent with a conventional workflow, search interface or improved API. Use agency where variable interpretation helps and where the action boundary can be controlled.
+Organize around a product or process outcome, supported by reusable platform and domain capabilities. Assign a named accountable owner for every deployed service. Functional specialists can contribute across teams, but a user should not have to navigate the organizational chart to resolve a failed case.
 
-A service charter should state:
-
-- The outcome and eligible case population, including explicit exclusions.
-- Permitted data, tools, targets, action limits and required approvals.
-- The accountable business owner and technical service owner.
-- Success, suspension and retirement criteria agreed before the pilot.
-- The operational fallback, human review capacity and escalation route.
-
-NIST organizes AI risk work around Govern, Map, Measure and Manage, with governance operating throughout the lifecycle. This guide applies that structure to an agent service; it does not reproduce or claim a complete NIST assessment. [NIST AI RMF Core](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
-
-## Make decision rights explicit
-
-One person holds each accountable role for a service; several teams may deliver the work. Higher-impact services need appropriate separation between implementation, risk acceptance and release approval.
-
-| Decision | Accountable role | Required contribution or evidence |
+| Team or role | Owns | Working agreement |
 | --- | --- | --- |
-| Whether the outcome justifies investment | Business service owner | Baseline, affected-user needs, benefit hypothesis and cost ceiling |
-| What the agent may access or change | Business process owner | Authority matrix, policy limits and data-owner concurrence |
-| How the capability is engineered and supported | Technical service owner | Architecture, dependencies, service objectives and support coverage |
-| Whether a tool contract is fit for shared use | Domain capability owner | Schema, authorization, version support, invariants and recovery contract |
-| Whether residual risk is acceptable | Designated risk authority | Independent challenge, open findings, compensating controls and expiry |
-| Whether a release enters or expands production | Release authority | Tested version manifest, approved scope and rollback readiness |
-| Whether execution must stop during an incident | Incident commander or delegated on-call owner | Tested suspension access, evidence preservation and communication plan |
+| Business/process owner | Outcome definition, eligible cases, decision policy and benefit realization | Decides which work to eliminate, simplify, assist or automate; funds exception handling |
+| Product and process team | End-to-end journey, delivery backlog, acceptance and adoption | Includes frontline specialists; prioritizes useful completion over agent activity |
+| Domain capability/data owners | Authoritative records, supported APIs, content quality and transaction rules | Publish freshness, permission, compatibility and recovery contracts |
+| Platform team | Reusable identity, runtime, integration, evaluation and telemetry services | Offers supported patterns and self-service paths with clear costs and limits |
+| Experience and change leads | Usability, communications, training and role transition | Test whether users understand outcomes, uncertainty and human handoffs |
+| Technical service/operations owner | Reliability, dependency health, support, incidents and reconciliation | Accepts the service before launch and maintains operational readiness |
+| Evaluation and assurance specialists | Measurement design, independent challenge and control evidence | Assess the real workload and expose uncertainty; do not manufacture a pass |
 
-The business owner remains accountable for the service outcome after approval. Human reviewers need authority, time and sufficient evidence; placing a person in an overloaded queue does not establish effective oversight.
+The designated risk authority accepts residual risk; the release authority approves a deployment within defined scope. A service owner may hold either role only where that authority is explicitly assigned. Smaller teams can combine roles while preserving the independence their highest-consequence decisions require. NIST supports documented responsibilities, executive accountability and differentiated human oversight; this particular team design is our application of that guidance. [NIST AI RMF Core, GOVERN 2–3](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
 
-## Use risk tiers to allocate assurance effort
+## Treat changes to work as part of delivery
 
-These tiers are illustrative. Classification depends on impact, data sensitivity, scale, reversibility, affected rights and operating context. A read operation can be high impact when it exposes protected information; an apparently reversible action can have irreversible downstream effects.
+Ask what each role does after the intervention. In service recovery, specialists may spend less time copying order facts and more time resolving disputed evidence, unusual remedies and dissatisfied users. That change requires a usable case view, explicit authority and time to learn. Renaming a manual step as an approval can leave the original investigation work intact.
 
-| Tier | Illustrative activity | Starting assurance posture |
+Design the human handoff as a product feature. It should present current state, relevant evidence, proposed options, unresolved questions and the decision required. Show whether an action is proposed, committed or awaiting reconciliation. Give the reviewer a practical way to disagree, correct a fact, request more evidence or route the case.
+
+Involve frontline staff in process mapping and pilots. Track the work that moves elsewhere: extra review, support tickets, knowledge maintenance and exception management. Do not count a transfer of effort from one team to another as a saving. Plan how released capacity will be redeployed before reporting benefits.
+
+## Develop skills and a learning culture
+
+Different roles need different competence. Process specialists need to challenge evidence and interpret uncertainty. Product teams need to distinguish a good answer from a completed outcome. Engineers need retrieval, integration, evaluation and failure-recovery skills. Operations staff need to diagnose the chain from request to model, tool, workflow and business record.
+
+Use realistic exercises: a stale policy, an ambiguous request, an unavailable system, a rejected recommendation and a timeout after a possible commit. Assess whether the person can complete the exception, not whether they attended a training session. Maintain ordinary operating procedures alongside reusable agent skills; a skill file cannot replace domain knowledge or a supported application contract.
+
+Create a culture in which reporting a failed case improves the service rather than undermines a success narrative. Reward useful corrections, simplification and retirement of ineffective features. Avoid incentives based only on adoption, autonomous completion or tool-call volume. An appropriate escalation can be the best business result.
+
+## Join delivery ownership to operational ownership
+
+The first delivery slice should include a supported failure path and the person responsible for it. Before launch, agree service objectives, dependency owners, review capacity, budgets, escalation rules and reconciliation procedures. Operations should participate in design and testing, rather than inherit a finished application with an incomplete runbook.
+
+Maintain one improvement backlog across process, data, experience and technology. A slow resolution may come from an approval queue or a missing source record; a different model will not necessarily fix it. Classify recurring failures by root cause and fund the responsible team to address them.
+
+Manage reusable components as services. Tool consumers need notice of breaking changes, a supported version window and an escalation route. Model, prompt, skill, policy and retrieval changes need impact assessment proportional to the behavior they can change. Use the [security and assurance evidence](security-and-assurance.md) when the change affects access or business action.
+
+## Give each review a decision
+
+The following cadence is illustrative; combine it with the [Day 2 operating practices](day-2-operate-and-improve.md).
+
+| Cadence | Primary decision | Accountable participant |
 | --- | --- | --- |
-| 0: bounded public retrieval | Find an approved public product document | Provenance, input/output checks and resource limits |
-| 1: restricted retrieval | Read a permitted internal service record | Identity, record-level authorization, minimization and access evidence |
-| 2: bounded reversible change | Create a low-impact internal work item | Business validation, idempotency, notification and demonstrated recovery |
-| 3: material action | Change access or commit a significant obligation | Transaction-specific authority, enforced limits, independent review where required and commit evidence |
-| 4: critical consequence | Support a safety-sensitive or rights-affecting decision | Formal domain assessment; qualified decision authority; validated operating limits; support-only mode as the starting position |
+| During live operation | Contain a failure, restore service or route unfinished work | On-call/service operations |
+| Daily in a pilot | Adjust reviewer capacity, fix user friction or pause a failing case class | Product and process leads |
+| Weekly | Prioritize recurring outcome, data and integration problems | Cross-functional service team |
+| Monthly | Confirm benefits, costs and actual capacity redeployment; change investment | Business owner with finance and operations |
+| At portfolio review | Reuse, expand, consolidate or retire capabilities | Business and platform leadership |
+| On material change | Determine which evaluations and approvals must be renewed | Relevant owners and release authority |
 
-The highest credible consequence governs review depth. Tiers neither grant authority nor prescribe universal monetary thresholds. Approval and execution controls should be implemented outside model interpretation. [OWASP AI agent security guidance](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
+Every review ends with an action, owner and date or an explicit decision to continue observation. A dashboard without a decision path is another reporting workload.
 
-## Release through evidence gates
+## Measure value with stable denominators
 
-| Gate | Evidence required | Decision |
-| --- | --- | --- |
-| 1. Qualify | Charter, baseline, alternative approaches, eligible population and impact assessment | Fund discovery or stop |
-| 2. Bound | Data flow, threat model, tool owners, action policy, recovery and identity design | Authorize an isolated prototype |
-| 3. Validate | Scenario results, security-control tests, error analysis, cost estimate and unresolved risks | Permit a limited pilot or remediate |
-| 4. Pilot | Restricted population, staffed review, production telemetry, incident drill and measured outcomes | Expand, adjust or suspend |
-| 5. Operate | Service objectives, recurring review, change controls, support and budget ownership | Continue within approved limits |
-| 6. Retire | Dependency migration, access revocation, data disposition and closure evidence | Remove from service |
+Choose the cohort, eligibility rules, follow-up window and baseline before the pilot. Report counts, uncertainty, unresolved cases and changes in case mix. These definitions are proposed measures, not performance targets or claimed results.
 
-Each gate produces an explicit decision, named approver, approved scope, expiry or next review, and links to controlled evidence. Incomplete evidence is visible rather than replaced by a narrative assurance claim. Evaluation results should match the intended deployment context; narrow demonstrations cannot establish general reliability. [NIST Generative AI Profile, MEASURE 2.5 and Appendix A.1.4](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
-
-A model, tool, policy, skill, data-source or permission change triggers impact assessment. Record which evidence remains applicable and which tests must be repeated. A minor version label is not evidence of low risk. Emergency changes require a bounded exception, accountable approver and retrospective review.
-
-## Measure outcomes with defined denominators
-
-Set targets before the pilot and publish the cohort, time window, exclusions and data source with every result. A proposed monthly scorecard follows. These are measurement definitions, not claimed benchmarks or promised returns.
-
-| Measure | Definition and interpretation |
+| Measure | Definition |
 | --- | --- |
-| Verified outcome rate | Eligible cases reaching the predefined business outcome without disqualifying rework during the follow-up window / all eligible cases entering the measured cohort. Report pending cases and window maturity separately. |
-| Autonomous resolution rate | Eligible cases completed correctly without human execution or review / all eligible cases in the cohort. Also report the reviewed-case share so automation does not hide oversight work. |
-| Exception rate | Eligible cases requiring unplanned manual intervention, escalation, or recovery / all eligible cases in the cohort. Count each case once and report planned approval reviews separately. |
-| Material unauthorized-action rate | Confirmed unauthorized committed actions / all committed material actions. Report attempted-but-denied actions separately and count incidents even when later reversed. |
-| Recovery success | Failed or incorrect actions restored to the approved state within the recovery target / all actions requiring recovery. Include unresolved and unrecoverable cases in the denominator. |
-| Time to verified resolution | Median and 95th percentile from eligible-case intake to verified outcome, including queue and review time. Report unresolved cases and their age to prevent completion-only bias. |
-| Cost per verified outcome | Total attributable operating cost for the cohort / verified outcomes in that cohort. Include unsuccessful attempts, inference, tools, runtime, monitoring, human review and allocated shared-service cost. Report one-time build cost separately. |
-| Net capacity released | Baseline human hours for a comparable cohort minus actual execution, review, exception and support hours. Show volume and case-mix adjustments; released time is not automatically cash savings. |
-| Capability reuse | New workflows using an existing approved capability without a new domain integration / all new workflows released in the period. Report adapter and assurance effort alongside the ratio. |
+| Verified outcome rate | Eligible cases meeting the agreed business outcome without disqualifying rework in the follow-up window / all eligible cases entering the cohort. Report how many have completed that window. |
+| Adoption for eligible work | Eligible cases actually handled through the new service / all cases eligible to use it. Report abandonment separately; logins are not completed work. |
+| Exception rate | Eligible cases requiring an unplanned human decision, correction or recovery / all eligible cases. Separate these from planned approvals and report exception reasons. |
+| Human effort per eligible case | Total execution, review, exception and attributable support minutes / all eligible cases. Include failed attempts and work shifted to other teams. |
+| Time to verified resolution | Median and 95th percentile from intake to accepted outcome, including queues. Report unresolved cases and their age to expose completion-only bias. |
+| Cost per verified outcome | Total attributable operating cost for the cohort / verified outcomes. Include unsuccessful work, inference, tools, retrieval, infrastructure, telemetry, review and allocated shared services; report build cost separately. |
+| Net capacity released | Human hours required by a comparable baseline cohort minus actual human hours for the new cohort, adjusted for volume and complexity. Distinguish available time, redeployed time and eliminated expense. |
+| Recovery effectiveness | Cases requiring recovery that reach the approved state within the recovery target / all cases requiring recovery. Keep unresolved and unrecoverable cases in the denominator. |
+| Capability reuse | Newly released workflows using an existing supported domain capability without a new domain integration / all newly released workflows. Report adapter, assurance and support effort alongside the ratio. |
 
-For rates, report numerator and denominator; for small samples, include uncertainty and avoid precise-looking rankings. Segment outcomes by relevant case complexity and risk. Compare against a concurrent or carefully matched baseline where feasible, because changing demand can otherwise look like an automation benefit.
+Segment results where aggregate averages could hide difficult cases or affected user groups. Use a matched or concurrent baseline where feasible. If a denominator is zero, report the measure as not applicable rather than zero cost or perfect quality. Use [pricing and economics](pricing-and-economics.md) to connect these measures to an explicit service-cost model.
 
-Use cost and quality together. A cheaper completion that increases rework, delays a person or causes an unauthorized action is not a successful outcome. Include unresolved complaints and sampled user feedback in portfolio review.
+## Test the Agent Factory economic hypothesis
 
-## Fund reusable capabilities without obscuring their cost
+An *Agent Factory* is a repeatable delivery and operating approach: common intake, supported capabilities, reusable procedures, evaluation assets and deployment patterns. Its economic hypothesis is that successive workflows require less incremental effort because they reuse approved foundations.
 
-Maintain a domain-owned capability catalog with consumer list, service objectives, policy contract, supported versions and deprecation dates. Fund shared identity, assurance, evaluation and observability deliberately. Allocate shared-service cost transparently so a low apparent per-call price does not conceal central operating effort.
+Test that hypothesis. Record lead time, integration effort, assurance effort and support cost for each additional workflow. Compare with a credible standalone approach, accounting for shared-platform build and maintenance. Reuse can fail economically when coordination, generic abstraction or incompatible requirements cost more than the duplication avoided.
 
-Expand only when measured benefits exceed incremental delivery, oversight and operating costs within accepted risk. Tool count and agent count are inventory measures, not benefit measures.
+Start with the foundations required by a real workflow and a credible next consumer. Fund owners for shared assets; do not build an unfunded catalog that consumers cannot rely on. Standardize proven contracts and recurring needs, while allowing a simpler local solution when shared infrastructure adds little value.
 
-## Suspend and retire deliberately
+## Keep transformation and stewardship connected
 
-Define triggers such as unsupported dependencies, repeated control failures, deteriorating outcomes or an uneconomic cost base. Suspension should stop new actions while preserving reconciliation and incident access. Retirement includes notifying consumers, migrating or cancelling queued work, reconciling pending transactions, revoking credentials, removing discovery entries and applying the approved retention or deletion schedule.
+Continue the service because verified outcomes justify its cost and accepted risk, not because it has already consumed investment. Narrow scope when exceptions exceed support capacity. Retire it when the process changes, the benefit disappears or dependencies can no longer be supported, including migration of unfinished work and withdrawal of access.
 
-Keep closure evidence and update the capability inventory so retired versions cannot be redeployed accidentally. Safe decommissioning and system inventory are explicit parts of the NIST governance core. [NIST AI RMF Core, GOVERN 1.6–1.7](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
-
-Use [security and assurance](security-and-assurance.md) to turn the charter's boundaries into controls and acceptance evidence. See the [source review notes](../research/assurance-source-notes.md) for research scope and version caveats.
+The final [governance and business realignment chapter](governance-and-business-realignment.md) brings people, technology and operating philosophy together so that authority and evidence support the redesigned process throughout its life.

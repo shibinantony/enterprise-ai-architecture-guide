@@ -1,97 +1,77 @@
-# From prompting to governed agency
+# Enterprise AI as a business transformation and architecture decision
 
-## Executive thesis
+## The investment thesis
 
-An enterprise agent is an operational service that interprets intent and uses tools to pursue a business outcome. Its value comes from the complete service: accurate interpretation, legitimate authority, reliable execution, and evidence that the intended result occurred.
+Enterprise LLM and agent platforms can make interpretation, synthesis, creation, and interaction practical at a scale that would otherwise require substantial manual effort. The opportunity becomes a business result when the surrounding process changes.
 
-The strategic shift is from funding isolated assistants to managing a portfolio of reusable capabilities. MCP can support this shift by standardizing how applications discover and request capabilities. It does not replace the organization's responsibility for business decisions, access, transactions, or recovery. [MCP specification](https://modelcontextprotocol.io/specification/2026-07-28)
+A faster draft has limited value if it waits in the same approval queue. A capable agent cannot resolve an order if the enterprise lacks reliable data or clear authority to offer a remedy. Leadership must redesign the work and deliver the service, with the AI platform as an enabling capability.
 
-The recommendation in this guide is to fund one bounded workflow and the smallest shared foundation it needs. Expansion should depend on measured outcomes and control evidence. Building a large platform before establishing demand risks creating expensive infrastructure without a durable service portfolio.
+Google Cloud is this guide's detailed implementation example. Azure and AWS are compared against the same logical architecture and workload. Different models, regions, deployment modes, and commercial packages are distinguished explicitly.
 
-## Start with the process problem
+## The value portfolio
 
-Consider a fictional service team handling delivery disruptions. Staff repeatedly retrieve an order, check eligibility, determine an allowed remedy, apply it, and explain the result. Some requests are ambiguous; the compensation calculation and authority boundaries should be precise.
+| Opportunity | AI contribution | Enterprise change | Outcome measure |
+|---|---|---|---|
+| Customer resolution | Interpret requests, assemble facts, explain remedies | Consolidate case ownership and integrate actions | Verified resolution, repeat contacts, time to outcome |
+| Employee knowledge | Search and synthesize permitted content | Maintain content and embed access in work | Task completion and search effort |
+| Document operations | Extract, classify, compare, prepare documents | Standardize inputs and exceptions | Accepted throughput, error, rework |
+| Software engineering | Draft code, explain systems, propose tests | Improve review, testing, and delivery flow | Accepted changes, lead time, escaped defects |
+| Operational decisions | Summarize events, query records, compare options | Establish data freshness and decision ownership | Decision latency and subsequent outcome |
+| New service experiences | Language, voice, multimodal access | Redesign the journey and support model | Completion or conversion with quality |
 
-An agent can interpret the request, gather relevant evidence, and propose a resolution. A policy service evaluates the proposal. The business system validates current state and commits the approved action. The user receives a response grounded in the committed result, including unresolved uncertainty when execution cannot be confirmed.
+These are opportunities to test, not promised benefits. Measure the full process, including work transferred to other teams.
 
-This decomposition matters more than the choice of model. It assigns ambiguity to reasoning and business invariants to enforceable services.
+## Choose the right amount of agency
 
-| Process characteristic | Likely starting approach | Reason |
-|---|---|---|
-| Stable inputs and fixed decision steps | Conventional workflow or API automation | Easier to test and operate when interpretation adds little value |
-| Varied language, bounded task, verifiable outcome | Agent-assisted workflow | Interpretation may reduce manual work while actions remain constrained |
-| High consequence, disputed evidence, difficult reversal | Decision support with qualified review | Preserve accountable judgment and a complete evidence record |
-| No authoritative data or unclear process ownership | Improve the process and data first | An agent cannot repair missing authority or an undefined outcome |
+Use a **model call** for a bounded transformation, **retrieval** for enterprise knowledge, and **tools** for live facts or actions. Use a **deterministic workflow** when steps and rules are known. Add **agent reasoning** when variable intent or evidence genuinely changes the next step. Multiple agents need a measurable specialization or parallelism benefit that exceeds their coordination cost.
 
-These are selection heuristics. A real decision needs process data and accountable acceptance of residual risk.
+A disruption service can combine these patterns without becoming autonomous at every step. AI interprets the request and prepares a response; applications supply live state, determine eligible remedies, and commit the transaction. See [value and capabilities](value-and-capabilities.md).
 
-## Four planes, distinct responsibilities
+## Day 0: prepare the business
 
-**Reasoning plane:** interprets intent, selects relevant information, and proposes actions. It includes the model, host, workflow, procedures, and bounded memory.
+Agree the problem, baseline, future process, data readiness, target experience, team, and economic hypothesis. Decide which steps to eliminate, simplify, standardize, assist, automate, or retain as human judgment.
 
-**Knowledge plane:** supplies approved context with provenance, access restrictions, and freshness. It includes documents, retrieval, and reads from business records. Retrieved text remains data; it cannot grant authority.
+Identify how roles change. Specialists may investigate fewer routine cases but handle more ambiguity. Knowledge owners need time to maintain content. Supervisors need outcome and exception measures rather than activity counts. Training must prepare users to challenge and correct output.
 
-**Action plane:** exposes bounded operations and validates transactions against authoritative state. It includes MCP servers, domain services, APIs, and systems of record.
+The output is a service charter with a future workflow, not a collection of demos. See [Day 0](day-0-business-process.md).
 
-**Control plane:** manages registration, ownership, identities, policy versions, release decisions, evaluation, and revocation. Its decisions must be enforced in the execution path. A registry entry or a diagram alone provides no protection.
+## Day 1: deliver a complete service
 
-The [reference architecture](reference-architecture.md) explains how these planes interact without assuming that all controls must reside in one product or gateway.
+Build one representative path from user request to verified result, including data, integration, human handoff, and measurement. Evaluate the AI behavior and test access, correctness, concurrency, errors, load, recovery, and usability.
 
-## The strategic asset is a governed capability
+Prepare support and train the pilot group before launch. A local demonstration establishes feasibility; production readiness and adoption require additional evidence. See [Day 1](day-1-build-and-launch.md) and the [architecture](reference-architecture.md).
 
-A reusable capability includes more than a connector. It needs a stable contract, narrow authority, a business owner, compatibility tests, support commitments, data handling rules, and a retirement path.
+## Day 2: sustain outcomes
 
-For example, `propose_service_recovery` is easier to govern when its target records, permitted destinations, limits, failure modes, and evidence obligations are explicit. A generic tool that can execute arbitrary scripts may be flexible, but shifts substantial risk and review cost into every consuming workflow.
+Operate reliability, task quality, cost, data freshness, dependencies, incidents, adoption, and benefit realization. Count unresolved cases and work displaced into exception queues as carefully as successful completions.
 
-Standardized integration can reduce duplication. Reuse is economically beneficial only if the shared service's maintenance, assurance, and coordination costs are lower than the duplication it avoids. That proposition should be tested rather than assumed.
+Reuse supported tools, data products, evaluation assets, and delivery patterns where their economics justify it. A large agent inventory is not itself a business outcome. See [Day 2](day-2-operate-and-improve.md).
 
-## A business case that includes control costs
+## Economics beyond a token price
 
-Compare the proposed service with a measured baseline over comparable cases and time periods. Preserve the same definition of a successfully resolved case, including downstream rework and reversals.
+Include runtime, retrieval, data preparation, integrations, network, evaluation, observability, human review, support, and change management. Distinguish initial investment from recurring service cost.
 
 ```text
-Net period value = realized process benefit
-                   - incremental operating cost
-                   - amortized build and control cost
-                   - measured loss and remediation cost
+Cost per verified outcome = attributable service cost / verified outcomes
 
-Cost per verified outcome = total attributable service cost
-                            / independently accepted outcomes
+Realized period value = attributable business benefit
+                        - recurring service cost
+                        - agreed allocation of investment and transition cost
 ```
 
-These are planning formulas, not empirical findings. Avoid presenting theoretical hours saved as realized cash savings. Track redeployed capacity separately from eliminated expense, and do not subtract the same incident cost twice. Estimate uncertain losses using scenarios and sensitivity analysis; a short pilot with no incidents does not establish a low long-term loss rate.
+Benefits can be cash savings, redeployed capacity, incremental margin, improved service, or reduced expected loss. Avoid counting the same minutes saved as both reduced expense and redeployed capacity. Keep unverified benefits as scenarios.
 
-Include model consumption, hosting, retrieval, integration maintenance, evaluation, human review, observability, security, support, and recovery. Compare against simpler automation as well as current manual work. Shared platform costs need a declared allocation rule.
+The [pricing chapter](pricing-and-economics.md) provides dated rates and reproducible calculations. A cheaper inference rate may require more calls, context, retries, or review to achieve the same business quality.
 
-The [operating model](operating-model.md) defines denominators for outcome, cost, exception, recovery, and reuse measures.
+## Leadership decisions
 
-## Investment and stop decisions
-
-| Decision | Evidence required | Accountable decision-maker |
+| Decision | Evidence required | Deliverable |
 |---|---|---|
-| Fund discovery | Process volume, baseline, owner, expected outcome, credible data access | Business sponsor |
-| Fund a pilot | Bounded authority, threat model, evaluation plan, recovery design, cost envelope | Sponsor with architecture and control owners |
-| Permit constrained production | Tested enforcement and failure paths, support readiness, accepted residual risks | Designated service release authority |
-| Expand autonomy or scope | Sustained outcome quality, known exception behavior, capacity and control evidence | Business owner with risk and operations |
-| Pause or retire | Harm, control failure, poor economics, unavailable support, or loss of lawful access | Service owner under defined escalation rules |
+| Where to invest | Process pain, baseline, feasible intervention, owner | Prioritized opportunity |
+| What to change | Future process, journey, data, roles, adoption plan | Service charter |
+| What to build or buy | Architecture, equivalent alternatives, economics | Funded delivery plan |
+| When to launch | End-to-end quality, trained users, support, fallback | Bounded production service |
+| When to expand | Adoption, outcomes, sustainable economics | Wider scope or reusable capability |
+| When to stop | Poor value, harmful behavior, unsupported dependencies, inadequate demand | Redesign or retirement |
 
-Define these authorities before implementation. An architecture board may evaluate design without owning business outcomes; a security review cannot substitute for an operational owner.
-
-## What the director should ask
-
-1. Which process outcome improves, and how will it be independently verified?
-2. Why is agent reasoning needed for this process?
-3. Under whose identity and delegated authority will each action occur?
-4. Where are object access, limits, approval, and current-state validation enforced?
-5. What happens when an action times out after it may have committed?
-6. Who can stop new actions, reconcile incomplete work, and support affected users?
-7. What evidence would cause us to reject expansion or retire the service?
-8. Which reusable capabilities have a funded owner and another credible consumer?
-
-NIST's AI Risk Management Framework provides a useful voluntary structure for governing, mapping, measuring, and managing AI risks. The release gates and investment model in this guide are proposed applications of those ideas, not NIST certification criteria. [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-
-## Recommended first commitment
-
-Select one process with a clear owner, authoritative data, measurable outcomes, and a manageable exception path. Begin with assisted decisions or restricted reads. Add bounded actions only after enforcement and recovery tests pass. Use the resulting evidence to decide what to standardize and what to stop.
-
-The proposed [90-day plan](adoption-roadmap.md) expresses this as decision gates, with time boxes that should be adjusted to the organization's delivery and assurance obligations.
+Governance makes these decisions clear and sustainable. It belongs within business process realignment: people understand responsibilities, technology implements boundaries, and leadership rewards useful outcomes and learning. The [final chapter](governance-and-business-realignment.md) develops that relationship.

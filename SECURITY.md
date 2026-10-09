@@ -1,6 +1,6 @@
 # Security and sensitive information
 
-This repository contains research and a local policy simulator. It does not operate an agent service or accept customer data.
+This repository contains architecture research, an offline cost calculator, and a local policy simulator. It does not operate a cloud agent service or accept customer data.
 
 If you find an exposed credential, personal record, or sensitive organizational information, do not reproduce it in a public issue. Use the repository's private vulnerability reporting option if it is enabled. Otherwise, use a maintainer-provided private channel; a public request for a private channel should contain no sensitive details.
 

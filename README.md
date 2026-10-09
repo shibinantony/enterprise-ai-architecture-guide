@@ -1,83 +1,68 @@
-# Enterprise Agent Governance Guide
+# Enterprise AI: From Business Value to Production
 
-## From Prompting to Governed Agency
+**An enterprise architecture and adoption guide: Google Cloud deep dive, Azure and AWS comparison, and the journey from process redesign to sustained operation.**
 
-**A provider-neutral field guide for directors, enterprise architects, and platform leaders.**
+Enterprise AI succeeds when a better business process becomes a dependable service that people use. Models contribute language, reasoning, coding, and multimodal capabilities. Enterprise architecture combines those capabilities with data, applications, workflow, user experience, engineering, economics, and an operating team.
 
-The enterprise value of an agent lies in completing an authorized business outcome. A capable model is one component; dependable service also requires bounded tools, verified identity, explicit policy, transaction integrity, evaluation, and accountable ownership.
-
-This guide explains how to organize that system, where the Model Context Protocol (MCP) helps, and what the protocol leaves to the enterprise. It combines primary-source research with a proposed reference architecture, an operating model, reusable decision templates, and a small executable policy example.
-
-**The investment question:** which capabilities should an organization make available to agents, under what authority, and with what evidence that the resulting service is useful and controlled?
+This guide connects the decisions a director and architect must make: **where AI creates value, how work should change, which capabilities to buy or build, how to deliver them, and how to sustain the result.** Governance supports that journey through clear responsibilities and well-designed business controls.
 
 ```mermaid
 flowchart LR
-    I[Business intent] --> R[Reasoning and workflow]
-    R --> P[Proposed action]
-    P --> E[Identity and policy enforcement]
-    E --> T[Bounded tool service]
-    T --> S[Authoritative business transaction]
-    S --> O[Verified outcome]
-    A[Accountability and assurance] -.-> R
-    A -.-> E
-    A -.-> S
+    V[Business value and customer outcome] --> D0[Day 0: redesign work and prepare]
+    D0 --> A[Architecture and platform choice]
+    A --> D1[Day 1: build, integrate, evaluate, launch]
+    D1 --> D2[Day 2: operate, adopt, improve, scale]
+    D2 --> V
+    P[People, technology, and management philosophy] -.-> D0
+    P -.-> D1
+    P -.-> D2
 ```
 
-MCP standardizes an integration boundary. It does not, by itself, establish business authority or guarantee a safe transaction. The protocol includes authorization and security provisions; enterprises must implement them and add their own domain controls. [MCP specification](https://modelcontextprotocol.io/specification/2026-07-28), [authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)
+**Day 0, Day 1, and Day 2 are lifecycle stages, not three calendar days.** The [adoption roadmap](docs/adoption-roadmap.md) translates them into an illustrative delivery sequence.
 
-## Choose a reading path
+## Read the guide end to end
 
-| Reader | Start here | Decision or artifact |
-|---|---|---|
-| Director or investment sponsor | [Executive brief](docs/executive-brief.md) | Whether to fund a bounded service and reusable foundations |
-| Enterprise or solution architect | [MCP foundations](docs/mcp-foundations.md), then [reference architecture](docs/reference-architecture.md) | Trust boundaries, enforcement locations, integration contracts |
-| Security and risk leader | [Security and assurance](docs/security-and-assurance.md), then [operating model](docs/operating-model.md) | Threat controls, accountable owners, release evidence |
-| Platform or procurement lead | [Platform decision framework](docs/platform-decision-framework.md) | Evidence-based selection without provider rankings |
-| Delivery lead | [90-day adoption plan](docs/adoption-roadmap.md), then [templates](templates/README.md) | A staged, measurable implementation plan |
-| Engineer or technical reviewer | [Synthetic service-recovery example](examples/service-recovery/README.md) | Inspectable policy decisions and adversarial tests |
-| Research reader | [Research method and evidence map](research/README.md) | Sources, versions, limitations, and open questions |
+| Chapter | Question it answers |
+|---|---|
+| 1. [Executive brief](docs/executive-brief.md) | What should leadership invest in, and how will value be demonstrated? |
+| 2. [Value and enterprise AI capabilities](docs/value-and-capabilities.md) | Where do LLMs, retrieval, multimodality, workflows, and agents help? |
+| 3. [Day 0: business process redesign](docs/day-0-business-process.md) | What must change before adopting the technology? |
+| 4. [End-to-end enterprise architecture](docs/reference-architecture.md) | How do business, data, application, AI, infrastructure, and operations fit together? |
+| 5. [Google Cloud deep dive](docs/gcp-enterprise-architecture.md) | How does the architecture map to a GCP implementation? |
+| 6. [Google Cloud, Azure, and AWS comparison](docs/cross-cloud-comparison.md) | What are the equivalent layers, differences, and trade-offs? |
+| 7. [Pricing and service economics](docs/pricing-and-economics.md) | What do comparable workloads cost, and what does a token price omit? |
+| 8. [Day 1: build and launch](docs/day-1-build-and-launch.md) | How should the team deliver an integrated service? |
+| 9. [Day 2: operate and improve](docs/day-2-operate-and-improve.md) | How do reliability, adoption, quality, cost, and expansion work after launch? |
+| 10. [People and operating model](docs/operating-model.md) | Who owns the outcome, and how does the team learn and scale? |
+| 11. [Governance within business realignment](docs/governance-and-business-realignment.md) | How do people, technology, and management philosophy shape responsible delegation? |
 
-## Five positions this guide takes
+For leadership, start with chapters 1, 3, 7, and 10. For architecture review, use chapters 4–9 and the [platform decision framework](docs/platform-decision-framework.md).
 
-1. **Business outcomes determine the architecture.** Use an agent where interpreting varied intent or evidence adds value. Prefer a conventional workflow when the process is stable and fully specified.
-2. **Authority belongs outside the model.** Tool discovery, instructions, and a persuasive explanation are insufficient grounds for a business transaction.
-3. **Reuse needs ownership.** Shared tools and procedures create value only when their compatibility, control costs, and support obligations are managed.
-4. **Portability requires evidence.** A common protocol helps integration; equivalent identity, behavior, operations, and economics still need testing.
-5. **Autonomy is earned through bounded evidence.** Start with narrow scope and an exception path, then expand only when outcome and control measures justify it.
+## The running business example
 
-These are the guide's design positions, not claims of certification or measured industry results.
+A fictional enterprise wants to resolve delivery disruptions faster. Today, a specialist gathers information from several systems, interprets the issue, arranges a remedy, and explains the outcome. The proposed service uses AI for interpretation and synthesis, applications for authoritative records, and explicit workflow for commitments and exceptions.
 
-## Inspect the example
+The guide follows this process through redesign, GCP service selection, equivalent cloud alternatives, engineering, and operations. It also considers employee knowledge, document processing, software engineering, and operational analysis.
 
-The example uses fictional records and non-monetary demo credits. It is a **policy decision simulator**, with no model calls, network access, credentials, real transactions, or MCP transport implementation.
+## Reusable artifacts
 
-With Python 3.9 or later, run from the repository root:
+| Artifact | Purpose |
+|---|---|
+| [Process redesign canvas](templates/process-redesign-canvas.md) | Current and future process, people changes, benefit hypothesis |
+| [Use-case intake](templates/use-case-intake.md) | Decide whether and where to use AI |
+| [Platform evaluation](templates/platform-evaluation.md) | Compare candidates using common requirements and evidence |
+| [Capability registration](templates/capability-registration.md) | Define supported integration contracts and ownership |
+| [Release review](templates/release-review.md) | Business, user, technical, and operational launch readiness |
+| [Value scorecard](templates/value-scorecard.md) | Adoption, outcomes, capacity, economics, exceptions |
+| [Cost model](examples/cost-model/README.md) | Reproduce pricing scenarios and inspect assumptions |
+| [Policy simulator](examples/service-recovery/README.md) | Inspect a decision boundary using fictional data |
 
-```console
-python examples/service-recovery/evaluator.py
-python -m unittest discover -s examples/service-recovery -p "test_*.py" -v
-python tools/verify_repository.py
-```
+Technical supplements: [MCP foundations](docs/mcp-foundations.md), [security and assurance](docs/security-and-assurance.md), and an [architecture decision on transaction authority](decisions/001-enforce-authority-at-execution.md).
 
-Passing the example tests demonstrates only the documented local policy behavior. It does not validate a deployed identity system, approval service, transaction ledger, or agent platform.
+## Evidence and scope
 
-## Repository map
+**Edition 0.2 · researched 9 October 2026.** Product and pricing claims link to public primary sources. The [research index](research/README.md) separates documented capabilities, proposed designs, sourced prices, and illustrative assumptions. Region, commercial availability, feature status, quotas, and deployment mode require implementation-specific verification.
 
-```text
-docs/                       Executive, architecture, security, and operating guidance
-decisions/                  Architecture decision records
-templates/                  Intake, tool registration, release, and platform reviews
-examples/service-recovery/  Synthetic contracts, decisions, trace, and tests
-research/                   Primary-source registers and evidence boundaries
-tools/                      Local repository checks
-```
+This is an architecture and research guide with local illustrative code. It reports no deployed hyperscaler solution, measured cloud benchmark, or achieved business return. All business examples are fictional; no employer, client, private architecture, customer records, or confidential commercial terms are included.
 
-## Research and publication status
-
-- **Edition:** 0.1, reviewed 9 October 2026.
-- **MCP baseline:** 2026-07-28. Earlier implementations may use different lifecycle and transport behavior; verify compatibility before applying examples from any revision.
-- **Scope:** public standards, original architectural analysis, and fictional examples. No organization-specific architectures, provider product comparisons, customer records, or internal research artifacts are included.
-- **Evidence boundary:** this is a research and design guide. It reports no production deployment, comparative benchmark, demonstrated return on investment, or regulatory approval.
-- **License:** no repository license has been selected for this edition.
-
-See [contribution guidance](CONTRIBUTING.md), [security reporting](SECURITY.md), and the [change log](CHANGELOG.md).
+The protocol supplement discusses MCP 2026-07-28; this does not imply every cloud product or SDK implements that revision. No repository license has been selected. See [contribution guidance](CONTRIBUTING.md), [security reporting](SECURITY.md), and [change log](CHANGELOG.md).

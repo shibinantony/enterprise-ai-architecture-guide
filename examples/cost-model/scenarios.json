@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "notice": "Entire workload and all TCO allowances are invented planning inputs, not measurements, cloud price quotes, or promised savings.",
+  "session_assumption": "Each complete attempt starts an independent session; post-request tail is charged once per attempt where applicable. All model/tool loops for the attempt occur within that session.",
+  "common": {
+    "tasks_per_month": 100000,
+    "vcpus": "1",
+    "memory_gib": "2",
+    "reviewer_usd_per_hour": "45",
+    "gross_minutes_released_per_accepted_task": "4",
+    "capacity_realization_fraction": "0.50",
+    "operations_usd_per_hour": "75",
+    "build_amortization_months": 12,
+    "cache_read_fraction": "0",
+    "batch_fraction": "0"
+  },
+  "scenarios": {
+    "low": {
+      "attempts_per_task": "1.02",
+      "input_tokens_per_attempt": 4000,
+      "output_tokens_per_attempt": 500,
+      "session_seconds_per_attempt": "15",
+      "cpu_active_fraction": "0.20",
+      "idle_tail_seconds": {"gcp": "0", "azure": "0", "aws": "0"},
+      "accepted_fraction": "0.98",
+      "review_fraction": "0.02",
+      "review_minutes": "2",
+      "operations_hours": "40",
+      "build_usd": "30000",
+      "ancillary_usd_per_task": "0.005",
+      "fixed_platform_usd": "500",
+      "evaluation_token_budget_fraction": "0.01",
+      "contingency_fraction": "0.10"
+    },
+    "base": {
+      "attempts_per_task": "1.08",
+      "input_tokens_per_attempt": 8000,
+      "output_tokens_per_attempt": 1000,
+      "session_seconds_per_attempt": "30",
+      "cpu_active_fraction": "0.30",
+      "idle_tail_seconds": {"gcp": "0", "azure": "120", "aws": "120"},
+      "accepted_fraction": "0.95",
+      "review_fraction": "0.05",
+      "review_minutes": "3",
+      "operations_hours": "80",
+      "build_usd": "60000",
+      "ancillary_usd_per_task": "0.015",
+      "fixed_platform_usd": "1500",
+      "evaluation_token_budget_fraction": "0.05",
+      "contingency_fraction": "0.20"
+    },
+    "high": {
+      "attempts_per_task": "1.20",
+      "input_tokens_per_attempt": 16000,
+      "output_tokens_per_attempt": 2000,
+      "session_seconds_per_attempt": "60",
+      "cpu_active_fraction": "0.50",
+      "idle_tail_seconds": {"gcp": "0", "azure": "900", "aws": "900"},
+      "accepted_fraction": "0.90",
+      "review_fraction": "0.12",
+      "review_minutes": "5",
+      "operations_hours": "160",
+      "build_usd": "120000",
+      "ancillary_usd_per_task": "0.04",
+      "fixed_platform_usd": "4000",
+      "evaluation_token_budget_fraction": "0.10",
+      "contingency_fraction": "0.30"
+    }
+  }
+}

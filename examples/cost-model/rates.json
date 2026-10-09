@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-09",
+  "currency": "USD",
+  "basis": "Public list rates; no tax, negotiated discount, commitment, free allowance, caching or batch discount applied.",
+  "sources": {
+    "google_model": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+    "google_availability": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/partner-models/claude/haiku-4-5",
+    "google_runtime": "https://cloud.google.com/products/gemini-enterprise-agent-platform/pricing",
+    "aws_model": "https://www-cdn.anthropic.com/files/4zrzovbb/website/3684c2faafb97418665782cea0001f439f74b1d2.pdf",
+    "aws_model_crosscheck": "https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/blob/main/assets/docs/COST_ESTIMATES.md",
+    "aws_availability": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-haiku-4-5.html",
+    "aws_runtime": "https://aws.amazon.com/bedrock/agentcore/pricing/",
+    "azure_model": "https://platform.claude.com/docs/en/about-claude/pricing#claude-in-microsoft-foundry-pricing",
+    "azure_billing": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/claude-models-billing",
+    "azure_availability": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/claude-models",
+    "azure_runtime_units": "https://azure.microsoft.com/en-us/pricing/details/foundry-agent-service/",
+    "azure_runtime": "https://prices.azure.com/api/retail/prices?$filter=contains(productName,%27Agent%27)%20and%20armRegionName%20eq%20%27eastus2%27&currencyCode=%27USD%27",
+    "azure_runtime_behavior": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents"
+  },
+  "providers": {
+    "gcp": {
+      "model": {
+        "name": "Claude Haiku 4.5",
+        "model_id": "claude-haiku-4-5",
+        "mode": "Global endpoint, online pay-as-you-go; not provisioned throughput",
+        "location": "global",
+        "input_usd_per_million_tokens": "1.00",
+        "output_usd_per_million_tokens": "5.00",
+        "source_keys": ["google_model", "google_availability"],
+        "availability_note": "GA; Google lists retirement not sooner than 2026-10-15. Recheck before any deployment."
+      },
+      "runtime": {
+        "name": "Agent Runtime, standard Agent Compute and Agent Memory",
+        "location": "Published standard USD Scale rate; target us-central1 availability must be checked",
+        "metering": "allocated",
+        "bill_idle_tail": false,
+        "vcpu_usd_per_hour": "0.085",
+        "memory_usd_per_unit_hour": "0.009",
+        "memory_unit": "GiB",
+        "source_keys": ["google_runtime"],
+        "note": "Allocated resources during execution; idle time between turns excluded. Free allowances deliberately not deducted."
+      }
+    },
+    "azure": {
+      "model": {
+        "name": "Claude Haiku 4.5",
+        "model_id": "claude-haiku-4-5",
+        "mode": "Global Standard; Anthropic-hosted version 1; Azure Marketplace CCU billing",
+        "location": "Global inference, East US 2 resource endpoint",
+        "input_usd_per_million_tokens": "1.00",
+        "output_usd_per_million_tokens": "5.00",
+        "source_keys": ["azure_model", "azure_billing", "azure_availability"],
+        "availability_note": "Current Microsoft model table lists both hosting versions GA. This comparison selects the Anthropic-hosted Global Standard version."
+      },
+      "runtime": {
+        "name": "Foundry Agents, Hosted, Consumption",
+        "location": "eastus2",
+        "metering": "allocated",
+        "bill_idle_tail": true,
+        "vcpu_usd_per_hour": "0.0994",
+        "memory_usd_per_unit_hour": "0.0118",
+        "memory_unit": "GiB",
+        "source_keys": ["azure_runtime", "azure_runtime_units", "azure_runtime_behavior"],
+        "retail_api_evidence": {
+          "effective_start_date": "2026-02-01T00:00:00Z",
+          "product_name": "Foundry Agents",
+          "sku_name": "Hosted",
+          "sku_id": "DZH318Z0S78K/001S",
+          "cpu_meter_name": "Hosted vCPU Usage",
+          "cpu_meter_id": "bc9e699b-af61-53a1-97e8-66bac4f5b115",
+          "memory_meter_name": "Hosted Memory Usage",
+          "memory_meter_id": "9553cdec-3a26-54dc-bebd-ca28a87ad5e9",
+          "api_unit_of_measure": "1 Hour",
+          "unit_resolution": "Official Foundry Agent Service pricing page labels vCPU-hour and GiB-hour; the API supplies amounts. These are public catalog identifiers, not customer identifiers."
+        },
+        "note": "Per-session sandbox; use measured lifecycle duration. Scenario assumes the allocation remains billable through a selected idle tail."
+      }
+    },
+    "aws": {
+      "model": {
+        "name": "Claude Haiku 4.5",
+        "model_id": "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+        "mode": "Bedrock runtime Standard, Global Cross-Region inference",
+        "location": "us-east-1 source endpoint; globally routed inference",
+        "input_usd_per_million_tokens": "1.00",
+        "output_usd_per_million_tokens": "5.00",
+        "source_keys": ["aws_model", "aws_model_crosscheck", "aws_availability"],
+        "availability_note": "Current AWS model card supports global inference from us-east-1. Rate evidence includes the model vendor's 2026-05-27 platform-specific price sheet; revalidate the applicable marketplace offer."
+      },
+      "runtime": {
+        "name": "Bedrock AgentCore Runtime microVM v1, consumption",
+        "location": "Published commercial USD rate; us-east-1 scenario",
+        "metering": "active_cpu",
+        "bill_idle_tail": true,
+        "vcpu_usd_per_hour": "0.0895",
+        "memory_usd_per_unit_hour": "0.00945",
+        "memory_unit": "GB",
+        "source_keys": ["aws_runtime"],
+        "note": "v1 only, not v2 or Instances. Published memory unit is GB, unlike GiB on the other clouds. Calculator explicitly assumes decimal GB and can test a binary-unit interpretation; verify the billed meter before procurement."
+      }
+    }
+  },
+  "excluded_rates": {
+    "aws_runtime_v2": {
+      "vcpu_usd_per_hour": "0.1276",
+      "memory_usd_per_gb_hour": "0.0169",
+      "source_key": "aws_runtime",
+      "reason": "Different runtime generation and memory reclamation behavior; not silently substituted for v1."
+    }
+  }
+}
