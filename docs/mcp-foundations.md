@@ -28,14 +28,28 @@ The specification describes tools as model-controlled, resources as application-
 
 | Concern | Question answered | Example | Enforcement responsibility |
 |---|---|---|---|
-| Behavioral instruction | How should the agent behave? | Explain uncertainty before suggesting a resolution | Host and evaluation process; text alone cannot guarantee compliance |
+| Workspace or agent rule | What should apply throughout its configured scope? | Never describe an action as completed without a system receipt | Host and evaluation process; text alone cannot guarantee compliance |
 | Skill or procedure | How should this task be performed? | Gather evidence, classify a case, propose a resolution | Workflow implementation, supported by instructions |
 | Tool contract | What operation can be requested? | `create_service_case` with a defined input schema | MCP server and downstream service |
 | Business policy | Is this request permitted here and now? | Caller owns the case and has approval for the proposed action | Authoritative policy and transaction enforcement |
 
-This is the guide's architecture model, not a set of four MCP primitives. A Markdown instruction is not equivalent to an access-control rule. A procedure can reference policy without being the system that enforces it.
+This is the guide's architecture model, not a set of four MCP primitives. Here, a **rule** means a persistent behavioral instruction within an explicitly configured host or workspace scope. Discovery, precedence, and filenames depend on the host; MCP does not standardize workspace rules. A Markdown instruction is not equivalent to an access-control rule. A procedure can reference policy without being the system that enforces it.
 
-Skills can also be distributed through the optional **Skills over MCP** extension. It defines discovery and retrieval of instructions and supporting files; host support must be checked. Merely reading a skill does not activate it. [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
+The separate **Agent Skills** format packages a procedure in a directory with a `SKILL.md` file containing metadata and instructions. Supporting scripts, references, and assets are optional. Its progressive-disclosure approach exposes descriptive metadata first, then instructions and supporting material when needed. This can make procedures reusable without placing every procedure in every prompt; actual host support still matters. [Agent Skills specification](https://agentskills.io/specification)
+
+Skills can also be distributed through the optional **Skills over MCP** extension, which defines discovery and retrieval of instructions and supporting files. Hosts implementing it must treat skill content as untrusted and obtain per-skill user approval for host-side code execution or permission grants. Reading a nested skill as supporting content does not activate it. [Skills extension](https://modelcontextprotocol.io/extensions/skills/overview)
+
+For the fictional service-recovery process, the separation becomes concrete:
+
+| Layer | Proposed responsibility |
+|---|---|
+| Rule | Show an unresolved or pending state until a business-system receipt confirms completion |
+| Skill | Verify the order, gather applicable policy and evidence, prepare a remedy, route exceptions, and explain the confirmed outcome |
+| Read tool | `get_order_status` retrieves the current record within the caller's permitted scope |
+| Action tool | `issue_disruption_compensation` requests a specific change through a supported transaction service |
+| Enforced policy | The transaction service checks current eligibility, cumulative limits, required approval, and duplicate execution |
+
+The [three-tool walkthrough](from-prompt-to-enterprise-service.md) adds loyalty lookup and follows these responsibilities through to a verified outcome. These are proposed contracts, not implemented tools in this repository. Keep changeable thresholds in versioned business policy; the skill should consult that policy rather than maintain a conflicting copy. Evaluate the procedure's sequencing separately from the tool's contract and the transaction's invariants.
 
 ## Discovery is not a grant of authority
 
@@ -44,6 +58,32 @@ Clients can use `tools/list` to discover tools and `tools/call` to request execu
 **Architecture recommendation:** evaluate authority at execution using the authenticated principal, target object, requested action, current policy, and relevant business state. Recheck approvals when material arguments change. Reject unknown operations and unauthorized objects; do not rely on hiding tool names.
 
 A narrow tool name does not prove a narrow capability. A generic script runner or unrestricted query tool can expose much more authority than its short description suggests. Review the actual execution permissions and reachable systems before assigning its risk tier.
+
+## Turn integrations into supported capabilities
+
+When service recovery and shipment enquiry both need order facts, one supported order capability can avoid building two separate domain integrations. Each consumer still needs compatible client behavior, identity mapping, task evaluations, and support. Reuse is an architectural and economic outcome to measure, not an automatic result of adopting MCP.
+
+A proposed enterprise catalog could start with a few real consumers:
+
+| Domain | Illustrative capabilities | Potential consumers |
+|---|---|---|
+| Orders | `get_order_status`, `retrieve_delivery_events` | Service recovery, shipment enquiry |
+| Cases | `create_service_case`, `get_case_status` | Service recovery, support triage |
+| Policy | `retrieve_applicable_policy` | Service recovery, exception preparation |
+
+The catalog is an organizational inventory; `tools/list` is protocol discovery from a particular server. Neither supplies permission to act. A gateway may provide a common access path, but direct connections to supported domain servers can also serve the design.
+
+Register the owner, purpose, schemas, permitted callers, authentication contract, error meanings, compatibility window, evidence requirements, and support commitment. For mutations, add preconditions, idempotency scope, outcome lookup, and repair behavior. Record consumers before a breaking change or retirement. The [capability registration template](../templates/capability-registration.md) makes this reviewable.
+
+| Potential benefit | What makes it real | Qualification |
+|---|---|---|
+| Standardization | Common discovery and invocation contracts | Business semantics and authorization still need design |
+| Reuse | Several workflows consume one maintained domain integration | Count adaptation, assurance, and support costs |
+| Composition | Procedures combine independently supported tools | Test cross-tool state, failures, and partial completion |
+| Faster experimentation | A local or remote server exposes a bounded capability | A prototype connection is not production readiness |
+| Easier model change | Tool contracts survive a model substitution | Retest selection, arguments, outcomes, latency, and cost |
+
+Fund a shared capability when a current use case and a credible next consumer justify it. Track incremental integration effort and accepted outcomes; avoid making catalog size the success measure. The [operating model](operating-model.md) develops this reusable-platform economic hypothesis.
 
 ## Authorization exists, but has a defined scope
 
@@ -59,7 +99,7 @@ The official security guidance addresses confused-deputy attacks, token passthro
 
 The standard transports are stdio and Streamable HTTP. Transport bindings carry the same protocol semantics using different delivery mechanisms. [Transport overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports)
 
-Revision **2026-07-28** removes the earlier initialization handshake and protocol-level sessions. Requests carry version and capability metadata; servers implement `server/discover`. Change notifications use an opted-in `subscriptions/listen` stream. Earlier examples using `initialize` or `Mcp-Session-Id` describe a different revision. [Key changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+Revision **2026-07-28** removes the earlier initialization handshake and protocol-level sessions. Requests carry version and capability metadata; servers implement `server/discover`. Change notifications use an opted-in `subscriptions/listen` stream. Examples requiring `initialize` or protocol-managed `Mcp-Session-Id` describe an earlier revision. A hosting platform may retain an affinity header for its own routing; see the [cloud comparison](cross-cloud-comparison.md) for that separate responsibility. [Key changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
 
 **Architecture recommendation:** pin a compatibility matrix covering client, server, SDK, transport, protocol revision, and extensions. Validate it before upgrades. Keep business workflow state in explicit application records. Use business idempotency keys and reconciliation for mutations; a protocol request identifier is not evidence of exactly-once execution.
 

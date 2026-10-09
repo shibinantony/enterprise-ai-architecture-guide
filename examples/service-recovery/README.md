@@ -4,6 +4,8 @@ This runnable example is a **decision-policy simulator**, not an MCP server, app
 
 The business question is narrow: may an agent propose a service-recovery credit for a delayed order? A model can propose an action; a trusted service must decide whether that action is authorized, and the system of record must validate and commit it. Even a correct proposal is insufficient authority to execute.
 
+For the larger process, see the [three-tool design walkthrough](../../docs/from-prompt-to-enterprise-service.md). It adds order lookup, loyalty-based proposals, shipping, approval, and outcome verification as a conceptual design. Its illustrative policy differs from this simulator; those additional behaviors are not implemented here.
+
 ## Run from the repository root
 
 Use Python 3.9 or later:

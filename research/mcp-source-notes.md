@@ -16,6 +16,7 @@ This register supports [MCP foundations](../docs/mcp-foundations.md). It records
 | MCP-08 | [Transport overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports) | 2026-07-28 | Stdio and Streamable HTTP bindings; shared protocol semantics | Choosing a transport does not establish isolation, availability, or transaction integrity |
 | MCP-09 | [Key Changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog) | Changes from 2025-11-25 to 2026-07-28 | Removed handshake and protocol sessions; request metadata; discovery; subscription changes | A migration inventory, not evidence that every SDK or host implements the revision |
 | MCP-10 | [Skills](https://modelcontextprotocol.io/extensions/skills/overview) | Official extension; linked proposal marked Final; implementation support developing | Optional skill discovery/retrieval; host activation responsibilities | Separate from core primitives; verify actual client/server support and extension revision |
+| MCP-11 | [Agent Skills specification](https://agentskills.io/specification) | Public specification reviewed 2026-10-09 | `SKILL.md` packaging, optional supporting files, progressive disclosure | Separate skill format; neither host support nor MCP distribution is automatic |
 
 ## Interpretation rules
 

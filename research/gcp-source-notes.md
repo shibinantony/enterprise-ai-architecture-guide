@@ -29,6 +29,9 @@
 | GCP-21 | [Agent Registry](https://docs.cloud.google.com/agent-registry/overview) | Central inventory of agents, MCP servers, endpoints, and skills. | Registration is not application certification. |
 | GCP-22 | [Agent Gateway overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview) | Ingress/egress modes, network policy, and connectivity-template description. | See unresolved VPC-SC documentation difference below. |
 | GCP-23 | [Managing deployed-agent access](https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/manage-agent-access) | Identity/access and runtime VPC-SC limitations. Page updated **2026-10-07**. | Some terminology and feature status differs from overview pages; verify the exact configured route. |
+| GCP-24 | [Antigravity rules](https://www.antigravity.google/docs/rules) | Scoped instruction discovery, including `AGENTS.md` and `GEMINI.md`. | Development-host behavior does not establish runtime enforcement. |
+| GCP-25 | [Antigravity skills](https://www.antigravity.google/docs/skills) | Skill bundles and progressive disclosure. | Deployed application loading must be designed and verified separately. |
+| GCP-26 | [Antigravity MCP](https://www.antigravity.google/docs/mcp) | Development context and local/remote MCP connections. | Developer credentials/configuration are not a production authority model. |
 
 ## Material interpretation notes
 
@@ -37,5 +40,6 @@
 3. **RAG selection:** GCP-07 has a regional availability table and explicitly distinguishes supported controls from unsupported data residency. A supported region alone does not establish the full residency contract.
 4. **Protocol compatibility:** The repository's MCP foundations use the open specification's 2026-07-28 revision. Google hosting/framework documentation cited here does not prove that every runtime, SDK, tool, and gateway supports that revision. Pin a tested compatibility matrix.
 5. **Architecture versus feature:** The service-recovery flow, transaction executor, data preparation decisions, Day 0/1/2 activities, and value measures are this guide's proposals. They are not copied deployment instructions or claimed Google product guarantees.
+6. **Development route versus runtime target:** GCP-18 currently demonstrates `app/agent.py`, local runs, evaluation, and a Cloud Run deployment. The chapter selects Agent Runtime as a separate proposed hosting choice using GCP-05. Neither source proves that development workspace rules, skills, or MCP configuration transfer automatically to that application.
 
 Refresh this register when selecting a region, model, SDK, deployment route, or procurement commitment. Recheck published launch stages and service terms at that point; retain evidence for the selected configuration rather than a general product label.

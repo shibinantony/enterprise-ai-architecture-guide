@@ -119,6 +119,38 @@ A voice channel is a separate product decision: assess interruption behavior, la
 
 Google's ADK and Agents CLI quickstart demonstrates scaffolding, local execution, evaluation, and deployment. Treat that as an acceleration path; generated application and infrastructure changes still need engineering review. [ADK and Agents CLI quickstart](https://docs.cloud.google.com/gemini-enterprise-agent-platform/agents/quickstart-adk)
 
+### Distinguish the development assistant from the business agent
+
+Antigravity is one supported development environment for this path. Its MCP integration can supply development context such as schemas and build logs, and connect local processes or remote services. Those connections belong to the development assistant; the deployed service-recovery application needs its own explicit tool configuration and identity. [Antigravity MCP](https://www.antigravity.google/docs/mcp)
+
+Antigravity discovers scoped instructions in files such as `AGENTS.md` and `GEMINI.md`. Its skill mechanism uses `SKILL.md` bundles, with names and descriptions visible before relevant full instructions are loaded. These are documented development-tool behaviors, not automatic properties of every deployed ADK application. [Rules](https://www.antigravity.google/docs/rules), [skills](https://www.antigravity.google/docs/skills)
+
+The proposed transition is:
+
+```mermaid
+flowchart LR
+    D[Antigravity or another development assistant] --> C[Agents CLI scaffolding and local evaluation]
+    C --> A[Versioned ADK business application]
+    A --> R[Reviewed release and deployment configuration]
+    R --> P[Agent Runtime endpoint]
+    W[Workspace rules, skills, and development MCP] -. guide engineering .-> D
+    T[Production tools, identity, and business procedure] --> A
+```
+
+The current Google quickstart places application logic in `app/agent.py` and demonstrates `agents-cli run`, `agents-cli eval run`, and deployment to **Cloud Run**. That tutorial's deployment target is distinct from this chapter's proposed **Agent Runtime** target. Follow the selected runtime's deployment contract and the installed CLI version; the workflow does not make all targets interchangeable. [Google quickstart](https://docs.cloud.google.com/gemini-enterprise-agent-platform/agents/quickstart-adk), [Runtime deployment](https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/deploy-an-agent)
+
+| Learning artifact | Engineering purpose | Production transition the team must design |
+| --- | --- | --- |
+| Workspace rules | Keep code conventions and recurring instructions visible | Enforce critical requirements with CI checks, access controls, and application validation |
+| Disruption-recovery skill | Explain investigation, proposed remedy, and escalation | Package the approved procedure explicitly in the application; version it with evaluations |
+| Three-tool local MCP server | Demonstrate current-record lookup and bounded action | Implement authenticated service access, object permissions, availability, timeouts, and transaction behavior |
+| Generated agent project | Accelerate a working vertical slice | Review dependencies, deployment configuration, permissions, and maintenance ownership |
+| Managed endpoint | Make the application callable | Prove the complete business journey, support path, telemetry, capacity, and recovery behavior |
+
+A local developer credential must not become the production service's authority. A skill copied into a repository must not be assumed to load in the deployed host. Verify both in the released application. The [three-tool walkthrough](from-prompt-to-enterprise-service.md) makes these boundaries concrete using fictional records.
+
+### Build release evidence around the complete service
+
 The proposed delivery sequence is:
 
 1. **Build a local vertical slice.** Use fictional cases, mocked transaction tools, one retrieval source, and one model. Exercise the full user-to-resolution flow before adding components.

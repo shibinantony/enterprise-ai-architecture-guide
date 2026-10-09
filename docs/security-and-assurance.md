@@ -10,6 +10,10 @@ The orchestrator proposes an operation. Trusted execution code validates it. The
 
 Credentials, risk classifications and approval records belong outside model-generated content. A prompt instruction, tool description, `readOnlyHint` or model confidence score cannot grant permission. MCP tool metadata supports discovery; it does not demonstrate that a server's implementation behaves as described. [MCP tools, 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/server/tools)
 
+**Limit credential concentration.** Prefer independently scoped workload or agent identities, short-lived credentials, and delegated user authority where the process requires it. Retrieve necessary secrets through a managed secret service; prevent broadly privileged credentials from being inherited by every tool process. Document unavoidable shared identities and compensating controls. Test revocation, rotation, and attempted cross-tool access. These are proposed deployment controls, not properties supplied by the protocol.
+
+**Separate OAuth consent from business approval.** For an MCP proxy acting on third-party APIs, the official confused-deputy guidance requires consent tied to the requesting client, registered redirect validation, and protected, expiring, single-use authorization state. Consent to connect an application does not approve a particular refund or deployment. Exercise both boundaries independently. [MCP confused-deputy guidance](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices#confused-deputy-problem)
+
 ## Threats, controls and evidence
 
 The following matrix is this guide's proposed application of published guidance. Tests use synthetic records in isolated environments; production attack payloads and sensitive evidence belong in restricted systems.
@@ -28,6 +32,8 @@ The following matrix is this guide's proposed application of published guidance.
 Injection controls draw on [OWASP prompt-injection guidance](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html). Metadata, isolation and supply-chain controls draw on [OWASP MCP security guidance](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html). Identity requirements come from [MCP authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization); network and local-server threats are described in [MCP security guidance](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices). The approval and resource-limit patterns are informed by [OWASP agent security guidance](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html). Transaction recovery is a proposed application design, not an MCP delivery guarantee.
 
 Filtering, delimiters and sanitization can reduce exposure and identify some attacks; none establishes that arbitrary retrieved text is safe. Structured fields may still contain hostile instructions. Evaluate whether the independent action boundary holds when the model follows an attack, as well as whether the model resists it. [OWASP MCP security guidance](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html)
+
+For executable tools, the proposed supply-chain baseline is an immutable approved artifact, pinned dependencies and tool contracts, verified integrity/provenance, and rescanning when relevant vulnerabilities or dependencies change. Use package signatures and runtime attestation where supported and justified by the threat model. Neither proves that a tool is appropriate for a particular business action; behavior and authorization still require evaluation.
 
 ## Make human approval a transaction control
 

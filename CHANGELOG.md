@@ -1,5 +1,16 @@
 # Change log
 
+## 0.3 — 2026-10-09
+
+- Added a complete fictional three-tool service-recovery walkthrough, preserving the link between prompting, current business facts, reusable procedures, and observable action.
+- Expanded rules, skills, tools, capability discovery, reuse, and portability explanations with explicit implementation boundaries.
+- Added an industry use-case portfolio connecting business problems to architecture, process changes, and outcome measures.
+- Detailed the GCP development-assistant-to-business-application transition without assuming workspace configuration becomes production configuration.
+- Clarified MCP server hosting versus tool distribution, AWS protocol/session differences, and Azure hosted-agent approval responsibilities.
+- Added a topic coverage map and refreshed primary-source registers. The business-value-led Day 0/1/2 structure remains the main reading path.
+
+The walkthrough is a design illustration, distinct from the narrower tested policy simulator. It adds no claim of a deployed service, real transaction, or achieved business return.
+
 ## 0.2 — 2026-10-09
 
 - Reframed the guide around business value, enterprise AI capabilities, and end-to-end architecture.

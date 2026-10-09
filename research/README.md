@@ -6,6 +6,8 @@ This guide connects business value, process redesign, enterprise architecture, h
 
 The primary-source review date is **2026-10-09 UTC**. This is a focused technical and commercial-documentation review, not a systematic literature review, production case study, or cloud benchmark.
 
+Use the [topic coverage map](topic-coverage.md) to locate the practical examples, technical foundations, strategic decisions, and operating guidance. The [three-tool walkthrough](../docs/from-prompt-to-enterprise-service.md) and [industry portfolio](../docs/use-case-portfolio.md) are proposed designs, not reported deployments.
+
 ## Evidence registers
 
 | Register | What it supports |

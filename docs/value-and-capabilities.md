@@ -74,4 +74,6 @@ An existing workplace or contact-center product may satisfy a common need faster
 
 Compare actual units: per-seat product, consumption-based model API, managed agent runtime, and self-managed infrastructure have different scopes. The [cloud comparison](cross-cloud-comparison.md) separates these layers.
 
+The [industry use-case portfolio](use-case-portfolio.md) applies these choices to customer service, IT operations, engineering, financial services, healthcare/pharma, manufacturing, and assurance. The [three-tool walkthrough](from-prompt-to-enterprise-service.md) follows one bounded process all the way from a question to a verified outcome.
+
 The first delivery should be the smallest complete service a real user can adopt and a business owner can evaluate. [Day 0](day-0-business-process.md) turns that principle into a process design.

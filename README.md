@@ -42,7 +42,9 @@ For leadership, start with chapters 1, 3, 7, and 10. For architecture review, us
 
 A fictional enterprise wants to resolve delivery disruptions faster. Today, a specialist gathers information from several systems, interprets the issue, arranges a remedy, and explains the outcome. The proposed service uses AI for interpretation and synthesis, applications for authoritative records, and explicit workflow for commitments and exceptions.
 
-The guide follows this process through redesign, GCP service selection, equivalent cloud alternatives, engineering, and operations. It also considers employee knowledge, document processing, software engineering, and operational analysis.
+Follow the [three-tool walkthrough](docs/from-prompt-to-enterprise-service.md) from order status and loyalty lookup to a proposed remedy, authorized execution, and verified outcome. It makes rules, skills, tool contracts, and systems of record concrete before mapping them to cloud services.
+
+The [use-case portfolio](docs/use-case-portfolio.md) extends the pattern to IT operations, software engineering, financial services, healthcare and pharmaceutical operations, manufacturing, and assurance. Each proposed use case connects a business problem with process changes, capability requirements, boundaries, and outcome measures.
 
 ## Reusable artifacts
 
@@ -61,7 +63,7 @@ Technical supplements: [MCP foundations](docs/mcp-foundations.md), [security and
 
 ## Evidence and scope
 
-**Edition 0.2 · researched 9 October 2026.** Product and pricing claims link to public primary sources. The [research index](research/README.md) separates documented capabilities, proposed designs, sourced prices, and illustrative assumptions. Region, commercial availability, feature status, quotas, and deployment mode require implementation-specific verification.
+**Edition 0.3 · researched 9 October 2026.** Product and pricing claims link to public primary sources. The [research index](research/README.md) separates documented capabilities, proposed designs, sourced prices, and illustrative assumptions. The [topic coverage map](research/topic-coverage.md) connects the practical MCP learning journey with the full enterprise architecture. Region, commercial availability, feature status, quotas, and deployment mode require implementation-specific verification.
 
 This is an architecture and research guide with local illustrative code. It reports no deployed hyperscaler solution, measured cloud benchmark, or achieved business return. All business examples are fictional; no employer, client, private architecture, customer records, or confidential commercial terms are included.
 
