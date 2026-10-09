@@ -1,0 +1,37 @@
+{
+  "name": "grant_service_recovery",
+  "description": "Illustrative service-recovery request contract. This repository does not implement an MCP server or execute this action. A production service must verify caller authority, enforce policy, validate approval when required, and atomically commit against authoritative state.",
+  "inputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "policy_id",
+      "order_id",
+      "amount",
+      "unit",
+      "destination",
+      "idempotency_key",
+      "expected_order_version"
+    ],
+    "properties": {
+      "policy_id": {
+        "type": "string",
+        "enum": ["demo-service-recovery-v1"]
+      },
+      "order_id": {
+        "type": "string",
+        "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "maxLength": 80
+      },
+      "amount": {"type": "integer", "minimum": 1, "maximum": 50},
+      "unit": {"type": "string", "enum": ["demo credits"]},
+      "destination": {"type": "string", "enum": ["original_account"]},
+      "idempotency_key": {
+        "type": "string",
+        "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "maxLength": 80
+      },
+      "expected_order_version": {"type": "integer", "minimum": 1}
+    }
+  }
+}

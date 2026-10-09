@@ -1,0 +1,21 @@
+# Local and generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.codex/
+.agents/
+.publish/
+dist/
+*.zip
+*.log

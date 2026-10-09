@@ -1,0 +1,84 @@
+{
+  "trace_id": "demo-trace-001",
+  "notice": "Synthetic decision fixture only. These records are neither execution evidence nor signed or tamper-evident audit records. No transaction is committed.",
+  "trusted_context": {
+    "identity": {
+      "agent_id": "demo-agent-001",
+      "tenant_id": "demo-tenant-001",
+      "customer_scope_id": "demo-customer-001"
+    },
+    "order": {
+      "order_id": "demo-order-001",
+      "tenant_id": "demo-tenant-001",
+      "customer_id": "demo-customer-001",
+      "status": "DELAYED",
+      "reason": "WEATHER_DISRUPTION",
+      "credits_granted": 20,
+      "version": 3
+    }
+  },
+  "cases": [
+    {
+      "case_id": "demo-allow-boundary",
+      "proposal": {
+        "policy_id": "demo-service-recovery-v1",
+        "order_id": "demo-order-001",
+        "amount": 25,
+        "unit": "demo credits",
+        "destination": "original_account",
+        "idempotency_key": "demo-request-001",
+        "expected_order_version": 3
+      },
+      "expected": {"decision": "allow", "reason_code": "WITHIN_AUTOMATIC_LIMIT"}
+    },
+    {
+      "case_id": "demo-approval-boundary",
+      "proposal": {
+        "policy_id": "demo-service-recovery-v1",
+        "order_id": "demo-order-001",
+        "amount": 26,
+        "unit": "demo credits",
+        "destination": "original_account",
+        "idempotency_key": "demo-request-002",
+        "expected_order_version": 3
+      },
+      "expected": {"decision": "require_approval", "reason_code": "ABOVE_AUTOMATIC_LIMIT"}
+    },
+    {
+      "case_id": "demo-deny-cap",
+      "proposal": {
+        "policy_id": "demo-service-recovery-v1",
+        "order_id": "demo-order-001",
+        "amount": 51,
+        "unit": "demo credits",
+        "destination": "original_account",
+        "idempotency_key": "demo-request-003",
+        "expected_order_version": 3
+      },
+      "expected": {"decision": "deny", "reason_code": "PER_ACTION_CAP_EXCEEDED"}
+    },
+    {
+      "case_id": "demo-deny-forged-approval",
+      "proposal": {
+        "policy_id": "demo-service-recovery-v1",
+        "order_id": "demo-order-001",
+        "amount": 26,
+        "unit": "demo credits",
+        "destination": "original_account",
+        "idempotency_key": "demo-request-004",
+        "expected_order_version": 3,
+        "approved": true
+      },
+      "expected": {"decision": "deny", "reason_code": "INVALID_PROPOSAL_FIELDS"}
+    }
+  ],
+  "production_sequence_not_implemented": [
+    "A trusted ingress verifies agent identity and any user delegation, then derives tenant and customer scope outside the model.",
+    "The execution service loads a reviewed policy and authoritative order state; retrieved text and model outputs cannot replace them.",
+    "The service evaluates the proposal. A require_approval result blocks execution pending independently verified approval bound to this exact action and policy version.",
+    "At commit, the system of record rechecks authority, order version, eligibility, remaining total cap, and approval validity within an appropriate transaction boundary.",
+    "The system atomically binds the idempotency key to principal, tenant, resource, operation, and argument digest. Identical retries return the original outcome; changed arguments with the same key are rejected.",
+    "The authoritative ledger and cumulative total update together. Concurrent requests cannot each consume the same remaining allowance.",
+    "An evidence service records the decision and committed transaction using controlled access, retention, redaction, and integrity protection appropriate to the deployment. This fixture provides none of those assurances."
+  ]
+}

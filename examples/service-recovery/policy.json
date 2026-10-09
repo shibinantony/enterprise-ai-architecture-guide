@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "policy_id": "demo-service-recovery-v1",
+  "tool_name": "grant_service_recovery",
+  "unit": "demo credits",
+  "automatic_limit": 25,
+  "per_action_cap": 50,
+  "per_order_total_cap": 100,
+  "eligible_statuses": ["DELAYED"],
+  "eligible_reasons": ["WEATHER_DISRUPTION"],
+  "allowed_destination": "original_account"
+}
